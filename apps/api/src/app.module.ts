@@ -13,6 +13,8 @@ import { RidesModule } from './modules/rides/rides.module';
 import { CatalogModule } from './modules/catalog/catalog.module';
 import { FoodModule } from './modules/food/food.module';
 import { GroceriesModule } from './modules/groceries/groceries.module';
+import { CourierModule } from './modules/courier/courier.module';
+import { HomeServicesModule } from './modules/home-services/home-services.module';
 import { DatabaseModule } from './database/database.module';
 import { HealthController } from './health.controller';
 
@@ -47,6 +49,8 @@ import { HealthController } from './health.controller';
     CatalogModule,
     FoodModule,
     GroceriesModule,
+    CourierModule,
+    HomeServicesModule,
     DashboardModule,
   ],
   controllers: [HealthController],
