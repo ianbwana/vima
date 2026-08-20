@@ -1,0 +1,73 @@
+# Kiro Trust v2 — workspace permission policy for the `vima` repo.
+# Loaded from <workspace>/.kiro/settings/permissions.yaml and merged with
+# the user-scoped ~/.kiro/settings/permissions.yaml.
+#
+# Precedence is most-restrictive-wins: deny > ask > allow. The `ask` rules at
+# the bottom therefore claw specific dangerous cases back out of the broad
+# allows above them.
+
+policies:
+  # Built-in presets shipped with Kiro:
+  #   edit-workspace — fs_read + fs_write anywhere under the workspace root
+  #   dev-shell      — git/npm/node/tsc/jest/python/go/docker-query/ls/cat/grep/...
+  - edit-workspace
+  - dev-shell
+
+rules:
+  # --- Extra shell commands this repo actually needs ---------------------
+
+  - capability: shell
+    match: ["git *", "npm *", "npx *"]
+    effect: allow
+
+  - capability: fs_write
+    match: ["src/**", "tests/**"]
+    effect: allow
+
+  - capability: fs_read
+    effect: allow
+
+  - capability: mcp
+    match: ["my-server/*"]
+    effect: allow
+    
+  - capability: shell
+    effect: allow
+    match:
+      - "docker compose up *"
+      - "docker compose build *"
+      - "docker compose logs *"
+      - "docker compose ps *"
+      - "docker compose exec *"
+      - "docker compose restart *"
+      - "docker compose config *"
+    # `docker compose down -v` destroys the Postgres volume — see ask rule below.
+
+  - capability: shell
+    effect: allow
+    match:
+      - "npx drizzle-kit *"
+      - "npx turbo *"
+      - "npx jest *"
+      - "npx tsc *"
+      - "turbo run *"
+
+  # --- Claw-backs: keep prompting for these ------------------------------
+  # .env holds live PSP (Stripe/Paystack) credentials.
+  - capability: fs_write
+    effect: ask
+    match:
+      - "./.env"
+      - "./.env.*"
+
+  # Anything that leaves the machine or destroys local state.
+  - capability: shell
+    effect: ask
+    match:
+      - "git push *"
+      - "git reset *"
+      - "git clean *"
+      - "rm *"
+      - "docker compose down *"
+      - "docker volume *"
+      - "npm publish *"
