@@ -1,0 +1,1046 @@
+{
+  "pbtResults": {
+    "8.4 Write property test for usage record idempotency": {
+      "status": "passed",
+      "lastRunTimestamp": 1787258326280
+    },
+    "6.5 Write property tests for P2P transfer conservation": {
+      "status": "passed",
+      "lastRunTimestamp": 1787258636934
+    },
+    "9.3 Write property test for dashboard metrics tenant isolation": {
+      "status": "passed",
+      "lastRunTimestamp": 1787258683854
+    },
+    "6.6 Write property tests for insufficient balance and invalid amount rejection": {
+      "status": "passed",
+      "lastRunTimestamp": 1787258709908
+    },
+    "7.4 Write property test for webhook idempotency": {
+      "status": "passed",
+      "lastRunTimestamp": 1787259019627
+    }
+  },
+  "executionHistory": {
+    "1.1 Create multi-stage Dockerfile for the NestJS API": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613452
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251644031
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252081380
+      }
+    ],
+    "1.2 Create docker-compose.yml with all services": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613505
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251645279
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252082130
+      }
+    ],
+    "1.3 Enhance health check endpoint with dependency verification": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613560
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252138013
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252522092
+      }
+    ],
+    "2.1 Create ledger module structure and DTOs": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613634
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251646491
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252082750
+      }
+    ],
+    "2.2 Implement LedgerService core transaction creation": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613724
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252138732
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252523027
+      }
+    ],
+    "2.3 Implement LedgerService account balance and account management": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613811
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252139528
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252523881
+      }
+    ],
+    "2.4 Add database trigger for ledger balance enforcement": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613935
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252140522
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252524740
+      }
+    ],
+    "3.1 Implement Stripe adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614033
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252553613
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252842291
+      }
+    ],
+    "3.2 Implement Paystack adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614099
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252554632
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252842967
+      }
+    ],
+    "4.1 Implement PSP connection service with credential encryption": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614169
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252858523
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253104567
+      }
+    ],
+    "4.2 Implement PSP connection verification and controller": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614283
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253158125
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253433254
+      }
+    ],
+    "4.3 Implement PspResolverService for runtime adapter resolution": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614413
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253158742
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253434014
+      }
+    ],
+    "5. Checkpoint — Core payments infrastructure": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614467
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253435099
+      }
+    ],
+    "6.1 Implement wallet top-up flow": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614549
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787257302255
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258036551
+      }
+    ],
+    "6.2 Implement P2P transfer": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614658
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787257303028
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258034745
+      }
+    ],
+    "6.3 Implement balance query and refund": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614760
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258043174
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258485124
+      }
+    ],
+    "6.4 Create wallet controller with REST endpoints": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614805
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258043937
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258484567
+      }
+    ],
+    "7.1 Create webhook module with ingress controller": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614865
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258044672
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258486669
+      }
+    ],
+    "7.2 Implement webhook service with deduplication and event publishing": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615077
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258498441
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258736972
+      }
+    ],
+    "7.3 Implement webhook processor with retry logic": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615176
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258743627
+      },
+      {
+        "executionId": "e1a5cac3-1914-4910-bd69-e823b573754e",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787259302794
+      }
+    ],
+    "8.1 Implement subscription service": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615240
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255481773
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787257296774
+      }
+    ],
+    "8.2 Implement usage metering service": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615294
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787257303561
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258035711
+      }
+    ],
+    "8.3 Create billing controller with REST endpoints": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615360
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787257304437
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258034305
+      }
+    ],
+    "9.1 Implement metrics service and controller": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615428
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787257305164
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258037076
+      }
+    ],
+    "9.2 Implement jobs-by-module endpoint": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615476
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258046312
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258485867
+      }
+    ],
+    "10. Checkpoint — Backend services complete": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615538
+      }
+    ],
+    "11.1 Initialize Next.js 15 portal application": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615612
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258745421
+      },
+      {
+        "executionId": "e1a5cac3-1914-4910-bd69-e823b573754e",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787259304343
+      }
+    ],
+    "11.2 Implement portal authentication layer": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615683
+      },
+      {
+        "executionId": "e1a5cac3-1914-4910-bd69-e823b573754e",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787259322998
+      }
+    ],
+    "11.3 Create login page": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615785
+      },
+      {
+        "executionId": "e1a5cac3-1914-4910-bd69-e823b573754e",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787259324436
+      }
+    ],
+    "11.4 Implement sidebar navigation and root layout": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615828
+      },
+      {
+        "executionId": "e1a5cac3-1914-4910-bd69-e823b573754e",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787259324537
+      }
+    ],
+    "12.1 Implement dashboard metric cards": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615877
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260137723
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260146117
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260472148
+      }
+    ],
+    "12.2 Implement jobs-by-module bar chart": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615988
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260137825
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260146520
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260472958
+      }
+    ],
+    "12.3 Implement loading and error states": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616022
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260137872
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260147371
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260473817
+      }
+    ],
+    "13.1 Implement module management page": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616050
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260137919
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260147910
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260474612
+      }
+    ],
+    "13.2 Implement module toggle logic with confirmation": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616088
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260137974
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260480596
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260716516
+      }
+    ],
+    "14.1 Implement providers list page": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616127
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138035
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260481272
+      }
+    ],
+    "14.2 Implement provider detail view": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616175
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138086
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260724937
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260936163
+      }
+    ],
+    "15.1 Implement payments page with PSP connection status": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616211
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138137
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260482029
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260718224
+      }
+    ],
+    "15.2 Implement PSP setup flow": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616262
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138216
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260725741
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260936848
+      }
+    ],
+    "16. Checkpoint — Portal pages complete": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616329
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138266
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260951187
+      }
+    ],
+    "17.1 Register all new modules in AppModule": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616391
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138302
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260951931
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261294255
+      }
+    ],
+    "17.2 Wire webhook processor to wallet service completion": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616471
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138342
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260952715
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261294939
+      }
+    ],
+    "18. Final checkpoint — All tests passing, feature complete": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616637
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138472
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261577347
+      }
+    ],
+    "1. Docker development environment": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252522220
+      }
+    ],
+    "2.5 Write property tests for ledger balance invariant": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252555296
+      }
+    ],
+    "2.6 Write property tests for account balance consistency": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252556222
+      }
+    ],
+    "2.7 Write property test for ledger append-only semantics": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252557158
+      }
+    ],
+    "2. Ledger service (double-entry accounting)": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252557285
+      }
+    ],
+    "3.3 Write unit tests for Stripe adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252856145
+      }
+    ],
+    "3.4 Write unit tests for Paystack adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252856968
+      }
+    ],
+    "3.5 Write property test for webhook signature verification round-trip": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252857715
+      }
+    ],
+    "3. PSP adapter implementations": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252857770
+      }
+    ],
+    "4.4 Write property test for credential encryption round-trip": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253157292
+      }
+    ],
+    "4. PSP connection service": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253434062
+      }
+    ],
+    "6.5 Write property tests for P2P transfer conservation": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255440745
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258496845
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258735590
+      }
+    ],
+    "6.6 Write property tests for insufficient balance and invalid amount rejection": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255440795
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258497933
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258736370
+      }
+    ],
+    "7.4 Write property test for webhook idempotency": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255440835
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258744596
+      },
+      {
+        "executionId": "e1a5cac3-1914-4910-bd69-e823b573754e",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787259303484
+      }
+    ],
+    "8.4 Write property test for usage record idempotency": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255440906
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258045556
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258487610
+      }
+    ],
+    "9.3 Write property test for dashboard metrics tenant isolation": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255440990
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258499229
+      },
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258737805
+      }
+    ],
+    "17.3 Write integration tests for webhook E2E flow": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255441028
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138386
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261300849
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261571214
+      }
+    ],
+    "17.4 Write integration tests for Docker environment": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787255441069
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260138426
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261301441
+      },
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261571314
+      }
+    ],
+    "8. Billing module": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258487742
+      }
+    ],
+    "6. Wallet service": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258736431
+      }
+    ],
+    "9. Dashboard metrics API": [
+      {
+        "executionId": "af68e7d2-29dd-485d-bb2f-3d9c86d11a08",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787258737853
+      }
+    ],
+    "7. Webhook ingress module": [
+      {
+        "executionId": "e1a5cac3-1914-4910-bd69-e823b573754e",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787259303528
+      }
+    ],
+    "12. Tenant portal — Overview dashboard": [
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260473868
+      }
+    ],
+    "13. Tenant portal — Modules page": [
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260716619
+      }
+    ],
+    "14. Tenant portal — Providers page": [
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260936276
+      }
+    ],
+    "15. Tenant portal — Payments page": [
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787260936920
+      }
+    ],
+    "17. Wire modules into AppModule and integration": [
+      {
+        "executionId": "79a91d35-0f97-4596-8e2b-10f9f0e33d34",
+        "chatSessionId": "sess_41136f63-8621-4691-b6e7-1889cacdcced",
+        "timestamp": 1787261596821
+      }
+    ]
+  }
+}

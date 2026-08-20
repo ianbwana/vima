@@ -10,7 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@vima/shared-types": "*"
+    "@vima/shared-types": "*",
+    "stripe": "^17.7.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
