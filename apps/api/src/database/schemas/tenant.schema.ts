@@ -335,3 +335,185 @@ export const tripTracks = pgTable('trip_tracks', {
   lng: decimal('lng', { precision: 10, scale: 7 }).notNull(),
   recordedAt: timestamp('recorded_at').defaultNow().notNull(),
 });
+
+// --- CATALOG & MERCHANTS ---
+
+export const merchantStatusEnum = pgEnum('merchant_status', ['pending', 'active', 'suspended', 'closed']);
+
+export const orderStatusEnum = pgEnum('order_status', [
+  'placed',
+  'accepted',
+  'preparing',
+  'ready',
+  'picked_up',
+  'delivered',
+  'cancelled',
+  'refunded',
+]);
+
+export const catalogItemUnitEnum = pgEnum('catalog_item_unit', ['piece', 'kg', 'g', 'l', 'ml']);
+
+export const merchants = pgTable('merchants', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  logoUrl: text('logo_url'),
+  coverUrl: text('cover_url'),
+  address: text('address'),
+  locationLat: decimal('location_lat', { precision: 10, scale: 7 }),
+  locationLng: decimal('location_lng', { precision: 10, scale: 7 }),
+  zoneId: uuid('zone_id').references(() => zones.id),
+  category: varchar('category', { length: 100 }), // restaurant, grocery_store, etc.
+  commissionRate: decimal('commission_rate', { precision: 4, scale: 2 }).notNull().default('0.15'),
+  status: merchantStatusEnum('status').notNull().default('pending'),
+  userId: uuid('user_id').references(() => users.id), // merchant owner
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const merchantHours = pgTable('merchant_hours', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  merchantId: uuid('merchant_id')
+    .notNull()
+    .references(() => merchants.id),
+  dayOfWeek: integer('day_of_week').notNull(), // 0=Sunday, 6=Saturday
+  openTime: varchar('open_time', { length: 5 }).notNull(), // HH:MM
+  closeTime: varchar('close_time', { length: 5 }).notNull(),
+});
+
+export const catalogs = pgTable('catalogs', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  merchantId: uuid('merchant_id')
+    .notNull()
+    .references(() => merchants.id),
+  name: varchar('name', { length: 255 }).notNull(), // e.g., "Main Menu", "Drinks", "Produce"
+  sortOrder: integer('sort_order').notNull().default(0),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const catalogItems = pgTable('catalog_items', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  catalogId: uuid('catalog_id')
+    .notNull()
+    .references(() => catalogs.id),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  imageUrl: text('image_url'),
+  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  available: boolean('available').default(true).notNull(),
+  sortOrder: integer('sort_order').notNull().default(0),
+  // Grocery-specific fields
+  unit: catalogItemUnitEnum('unit').default('piece'),
+  weightBased: boolean('weight_based').default(false).notNull(),
+  avgWeight: decimal('avg_weight', { precision: 6, scale: 3 }), // e.g., 0.500 kg
+  sku: varchar('sku', { length: 100 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const modifierGroups = pgTable('modifier_groups', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  catalogItemId: uuid('catalog_item_id')
+    .notNull()
+    .references(() => catalogItems.id),
+  name: varchar('name', { length: 255 }).notNull(), // e.g., "Size", "Extras", "Toppings"
+  required: boolean('required').default(false).notNull(),
+  minSelect: integer('min_select').notNull().default(0),
+  maxSelect: integer('max_select').notNull().default(1),
+});
+
+export const modifiers = pgTable('modifiers', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  modifierGroupId: uuid('modifier_group_id')
+    .notNull()
+    .references(() => modifierGroups.id),
+  name: varchar('name', { length: 255 }).notNull(),
+  price: decimal('price', { precision: 10, scale: 2 }).notNull().default('0.00'),
+  available: boolean('available').default(true).notNull(),
+});
+
+export const orders = pgTable('orders', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  customerId: uuid('customer_id')
+    .notNull()
+    .references(() => users.id),
+  merchantId: uuid('merchant_id')
+    .notNull()
+    .references(() => merchants.id),
+  jobId: uuid('job_id').references(() => jobs.id), // linked delivery job
+  status: orderStatusEnum('status').notNull().default('placed'),
+  subtotal: decimal('subtotal', { precision: 10, scale: 2 }).notNull(),
+  deliveryFee: decimal('delivery_fee', { precision: 10, scale: 2 }).notNull().default('0.00'),
+  commissionAmount: decimal('commission_amount', { precision: 10, scale: 2 }),
+  tip: decimal('tip', { precision: 10, scale: 2 }).default('0.00'),
+  total: decimal('total', { precision: 10, scale: 2 }).notNull(),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  deliveryAddress: text('delivery_address'),
+  deliveryLat: decimal('delivery_lat', { precision: 10, scale: 7 }),
+  deliveryLng: decimal('delivery_lng', { precision: 10, scale: 7 }),
+  notes: text('notes'),
+  placedAt: timestamp('placed_at').defaultNow().notNull(),
+  acceptedAt: timestamp('accepted_at'),
+  preparedAt: timestamp('prepared_at'),
+  pickedUpAt: timestamp('picked_up_at'),
+  deliveredAt: timestamp('delivered_at'),
+  cancelledAt: timestamp('cancelled_at'),
+});
+
+export const orderItems = pgTable('order_items', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  orderId: uuid('order_id')
+    .notNull()
+    .references(() => orders.id),
+  catalogItemId: uuid('catalog_item_id')
+    .notNull()
+    .references(() => catalogItems.id),
+  name: varchar('name', { length: 255 }).notNull(), // Snapshot of item name at order time
+  quantity: integer('quantity').notNull().default(1),
+  unitPrice: decimal('unit_price', { precision: 10, scale: 2 }).notNull(),
+  modifiers: jsonb('modifiers').$type<Array<{ name: string; price: string }>>(),
+  subtotal: decimal('subtotal', { precision: 10, scale: 2 }).notNull(),
+  // Grocery-specific
+  actualWeight: decimal('actual_weight', { precision: 6, scale: 3 }),
+  substitutionAllowed: boolean('substitution_allowed').default(true),
+});
+
+// --- GROCERY SUBSTITUTIONS ---
+
+export const substitutionStatusEnum = pgEnum('substitution_status', [
+  'pending',
+  'approved',
+  'rejected',
+  'timed_out',
+]);
+
+export const orderSubstitutions = pgTable('order_substitutions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  orderId: uuid('order_id')
+    .notNull()
+    .references(() => orders.id),
+  originalItemId: uuid('original_item_id')
+    .notNull()
+    .references(() => catalogItems.id),
+  proposedItemId: uuid('proposed_item_id')
+    .references(() => catalogItems.id),
+  proposedBy: uuid('proposed_by').references(() => users.id), // picker
+  status: substitutionStatusEnum('status').notNull().default('pending'),
+  respondedAt: timestamp('responded_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// --- DELIVERY FEE CONFIGURATION ---
+
+export const deliveryFeeTypeEnum = pgEnum('delivery_fee_type', ['flat', 'distance_based', 'free_above']);
+
+export const deliveryFeeConfig = pgTable('delivery_fee_config', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  zoneId: uuid('zone_id').references(() => zones.id),
+  feeType: deliveryFeeTypeEnum('fee_type').notNull().default('flat'),
+  flatFee: decimal('flat_fee', { precision: 10, scale: 2 }).default('0.00'),
+  perKmRate: decimal('per_km_rate', { precision: 10, scale: 2 }).default('0.00'),
+  freeAboveThreshold: decimal('free_above_threshold', { precision: 10, scale: 2 }),
+  minimumOrderAmount: decimal('minimum_order_amount', { precision: 10, scale: 2 }).default('0.00'),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
