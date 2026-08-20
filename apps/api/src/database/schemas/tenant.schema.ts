@@ -226,6 +226,63 @@ export const jobEvents = pgTable('job_events', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
+// --- NOTIFICATIONS ---
+
+export const notificationChannelEnum = pgEnum('notification_channel', [
+  'push',
+  'sms',
+  'whatsapp',
+  'email',
+]);
+
+export const notificationStatusEnum = pgEnum('notification_status', [
+  'queued',
+  'sent',
+  'delivered',
+  'failed',
+  'rate_limited',
+]);
+
+export const devicePlatformEnum = pgEnum('device_platform', ['ios', 'android', 'web']);
+
+export const userDevices = pgTable('user_devices', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id),
+  deviceId: varchar('device_id', { length: 255 }).notNull(),
+  platform: devicePlatformEnum('platform').notNull(),
+  fcmToken: text('fcm_token').notNull(),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const notificationPreferences = pgTable('notification_preferences', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id),
+  category: varchar('category', { length: 100 }).notNull(), // 'marketing', 'trip_updates', 'promotions', 'order_updates'
+  channel: notificationChannelEnum('channel').notNull(),
+  enabled: boolean('enabled').default(true).notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const notificationLogs = pgTable('notification_logs', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id),
+  channel: notificationChannelEnum('channel').notNull(),
+  templateKey: varchar('template_key', { length: 100 }).notNull(),
+  status: notificationStatusEnum('status').notNull(),
+  providerMessageId: varchar('provider_message_id', { length: 255 }),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  errorMessage: text('error_message'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
 // --- RATINGS ---
 
 export const ratings = pgTable('ratings', {

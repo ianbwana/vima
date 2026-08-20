@@ -3,9 +3,11 @@ import {
   UnauthorizedException,
   ConflictException,
   BadRequestException,
+  Optional,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { eq, and } from 'drizzle-orm';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
@@ -24,6 +26,7 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly tenantDb: TenantDbService,
     private readonly otpService: OtpService,
+    @Optional() private readonly eventEmitter?: EventEmitter2,
   ) {}
 
   async requestOtp(phone: string, tenantId: string) {
@@ -39,9 +42,13 @@ export class AuthService {
     const otp = this.otpService.generate();
     await this.otpService.store(db, phone, otp);
 
-    // In production, send SMS here via notification service
-    // For development, log the OTP
-    if (this.config.get('NODE_ENV') !== 'production') {
+    // Emit event for notification service to deliver the OTP
+    if (this.eventEmitter) {
+      this.eventEmitter.emit('otp.requested', { tenantId, phone, otp });
+    }
+
+    // In development without notification service configured, log the OTP
+    if (this.config.get('NODE_ENV') !== 'production' && !this.eventEmitter) {
       console.log(`[DEV] OTP for ${phone}: ${otp}`);
     }
 
