@@ -1,0 +1,508 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create multi-stage Dockerfile for the NestJS API": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613452
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251644031
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252081380
+      }
+    ],
+    "1.2 Create docker-compose.yml with all services": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613505
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251645279
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252082130
+      }
+    ],
+    "1.3 Enhance health check endpoint with dependency verification": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613560
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252138013
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252522092
+      }
+    ],
+    "2.1 Create ledger module structure and DTOs": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613634
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251646491
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252082750
+      }
+    ],
+    "2.2 Implement LedgerService core transaction creation": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613724
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252138732
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252523027
+      }
+    ],
+    "2.3 Implement LedgerService account balance and account management": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613811
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252139528
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252523881
+      }
+    ],
+    "2.4 Add database trigger for ledger balance enforcement": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251613935
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252140522
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252524740
+      }
+    ],
+    "3.1 Implement Stripe adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614033
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252553613
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252842291
+      }
+    ],
+    "3.2 Implement Paystack adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614099
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252554632
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252842967
+      }
+    ],
+    "4.1 Implement PSP connection service with credential encryption": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614169
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252858523
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253104567
+      }
+    ],
+    "4.2 Implement PSP connection verification and controller": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614283
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253158125
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253433254
+      }
+    ],
+    "4.3 Implement PspResolverService for runtime adapter resolution": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614413
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253158742
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253434014
+      }
+    ],
+    "5. Checkpoint — Core payments infrastructure": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614467
+      },
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253435099
+      }
+    ],
+    "6.1 Implement wallet top-up flow": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614549
+      }
+    ],
+    "6.2 Implement P2P transfer": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614658
+      }
+    ],
+    "6.3 Implement balance query and refund": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614760
+      }
+    ],
+    "6.4 Create wallet controller with REST endpoints": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614805
+      }
+    ],
+    "7.1 Create webhook module with ingress controller": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251614865
+      }
+    ],
+    "7.2 Implement webhook service with deduplication and event publishing": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615077
+      }
+    ],
+    "7.3 Implement webhook processor with retry logic": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615176
+      }
+    ],
+    "8.1 Implement subscription service": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615240
+      }
+    ],
+    "8.2 Implement usage metering service": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615294
+      }
+    ],
+    "8.3 Create billing controller with REST endpoints": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615360
+      }
+    ],
+    "9.1 Implement metrics service and controller": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615428
+      }
+    ],
+    "9.2 Implement jobs-by-module endpoint": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615476
+      }
+    ],
+    "10. Checkpoint — Backend services complete": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615538
+      }
+    ],
+    "11.1 Initialize Next.js 15 portal application": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615612
+      }
+    ],
+    "11.2 Implement portal authentication layer": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615683
+      }
+    ],
+    "11.3 Create login page": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615785
+      }
+    ],
+    "11.4 Implement sidebar navigation and root layout": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615828
+      }
+    ],
+    "12.1 Implement dashboard metric cards": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615877
+      }
+    ],
+    "12.2 Implement jobs-by-module bar chart": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251615988
+      }
+    ],
+    "12.3 Implement loading and error states": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616022
+      }
+    ],
+    "13.1 Implement module management page": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616050
+      }
+    ],
+    "13.2 Implement module toggle logic with confirmation": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616088
+      }
+    ],
+    "14.1 Implement providers list page": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616127
+      }
+    ],
+    "14.2 Implement provider detail view": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616175
+      }
+    ],
+    "15.1 Implement payments page with PSP connection status": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616211
+      }
+    ],
+    "15.2 Implement PSP setup flow": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616262
+      }
+    ],
+    "16. Checkpoint — Portal pages complete": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616329
+      }
+    ],
+    "17.1 Register all new modules in AppModule": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616391
+      }
+    ],
+    "17.2 Wire webhook processor to wallet service completion": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616471
+      }
+    ],
+    "18. Final checkpoint — All tests passing, feature complete": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787251616637
+      }
+    ],
+    "1. Docker development environment": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252522220
+      }
+    ],
+    "2.5 Write property tests for ledger balance invariant": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252555296
+      }
+    ],
+    "2.6 Write property tests for account balance consistency": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252556222
+      }
+    ],
+    "2.7 Write property test for ledger append-only semantics": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252557158
+      }
+    ],
+    "2. Ledger service (double-entry accounting)": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252557285
+      }
+    ],
+    "3.3 Write unit tests for Stripe adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252856145
+      }
+    ],
+    "3.4 Write unit tests for Paystack adapter": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252856968
+      }
+    ],
+    "3.5 Write property test for webhook signature verification round-trip": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252857715
+      }
+    ],
+    "3. PSP adapter implementations": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787252857770
+      }
+    ],
+    "4.4 Write property test for credential encryption round-trip": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253157292
+      }
+    ],
+    "4. PSP connection service": [
+      {
+        "executionId": "1b43ef87-d7c4-40c8-bafb-a195425e3b17",
+        "chatSessionId": "sess_200d3eb7-e403-4778-b7a6-3912f2713246",
+        "timestamp": 1787253434062
+      }
+    ]
+  }
+}

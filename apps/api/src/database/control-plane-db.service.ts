@@ -28,4 +28,17 @@ export class ControlPlaneDbService implements OnModuleInit, OnModuleDestroy {
   get db() {
     return this._db;
   }
+
+  /**
+   * Check if the database connection is alive.
+   * Used by the health check endpoint.
+   */
+  async isHealthy(): Promise<boolean> {
+    try {
+      await this.pool.query('SELECT 1');
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }

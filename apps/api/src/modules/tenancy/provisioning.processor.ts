@@ -305,6 +305,36 @@ export class ProvisioningProcessor extends WorkerHost {
         CREATE INDEX IF NOT EXISTS idx_jobs_provider ON jobs(provider_id);
         CREATE INDEX IF NOT EXISTS idx_ledger_entries_account ON ledger_entries(account_id);
         CREATE INDEX IF NOT EXISTS idx_ledger_entries_transaction ON ledger_entries(transaction_id);
+
+        -- Ledger balance enforcement trigger (double-entry safety net)
+        CREATE OR REPLACE FUNCTION check_ledger_balance()
+        RETURNS TRIGGER AS $$
+        DECLARE
+          net_amount NUMERIC;
+        BEGIN
+          SELECT SUM(
+            CASE WHEN direction = 'credit' THEN amount::numeric ELSE -amount::numeric END
+          ) INTO net_amount
+          FROM ledger_entries
+          WHERE transaction_id = NEW.transaction_id;
+
+          IF net_amount != 0 THEN
+            RAISE EXCEPTION 'Ledger transaction is unbalanced: net = %', net_amount;
+          END IF;
+
+          RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        -- Drop existing trigger if present to allow re-creation
+        DROP TRIGGER IF EXISTS enforce_ledger_balance ON ledger_entries;
+
+        -- Deferred constraint trigger: fires at COMMIT after all entries are inserted
+        CREATE CONSTRAINT TRIGGER enforce_ledger_balance
+          AFTER INSERT ON ledger_entries
+          DEFERRABLE INITIALLY DEFERRED
+          FOR EACH ROW
+          EXECUTE FUNCTION check_ledger_balance();
       `);
     } finally {
       client.release();
