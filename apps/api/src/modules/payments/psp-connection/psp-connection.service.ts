@@ -180,6 +180,28 @@ export class PspConnectionService {
   }
 
   /**
+   * Finds all PSP connections for a given provider across all tenants.
+   * Used by the webhook ingress to resolve adapter credentials for signature verification.
+   */
+  async findConnectionsByProvider(provider: PspProvider): Promise<PspConnectionRecord[]> {
+    const db = this.controlPlaneDb.db;
+
+    const connections = await db
+      .select({
+        id: schema.pspConnections.id,
+        tenantId: schema.pspConnections.tenantId,
+        provider: schema.pspConnections.provider,
+        verified: schema.pspConnections.verified,
+        lastVerifiedAt: schema.pspConnections.lastVerifiedAt,
+        createdAt: schema.pspConnections.createdAt,
+      })
+      .from(schema.pspConnections)
+      .where(eq(schema.pspConnections.provider, provider));
+
+    return connections;
+  }
+
+  /**
    * Marks a connection as verified. Called after successful test transaction.
    */
   async markVerified(connectionId: string): Promise<PspConnectionRecord> {

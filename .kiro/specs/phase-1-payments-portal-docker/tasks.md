@@ -135,41 +135,41 @@ This plan implements three pillars on top of the Phase 0 foundations (tenancy, i
 - [x] 5. Checkpoint — Core payments infrastructure
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 6. Wallet service
-  - [~] 6.1 Implement wallet top-up flow
+- [x] 6. Wallet service
+  - [x] 6.1 Implement wallet top-up flow
     - Create `apps/api/src/modules/payments/wallet/wallet.service.ts`
     - Implement `topup()` that creates a payment intent via tenant's PSP adapter
     - On payment success (via webhook callback), credit customer's ledger account and debit psp_clearing
     - _Requirements: 2.1_
 
-  - [~] 6.2 Implement P2P transfer
+  - [x] 6.2 Implement P2P transfer
     - Implement `transfer()` that debits sender and credits recipient in a single ledger transaction
     - Validate sender has sufficient balance before creating entries; reject with `INSUFFICIENT_BALANCE` error
     - Validate amount is positive; reject zero/negative amounts with validation error
     - _Requirements: 2.2, 2.3, 2.4_
 
-  - [~] 6.3 Implement balance query and refund
+  - [x] 6.3 Implement balance query and refund
     - Implement `getBalance()` returning computed balance from LedgerService
     - Implement `refund()` that debits customer's account (or credits psp_clearing for source refunds) and invokes PSP adapter refund
     - _Requirements: 2.5, 2.6_
 
-  - [~] 6.4 Create wallet controller with REST endpoints
+  - [x] 6.4 Create wallet controller with REST endpoints
     - Create `apps/api/src/modules/payments/wallet/wallet.controller.ts`
     - POST `/wallet/topup`, POST `/wallet/transfer`, GET `/wallet/balance`, POST `/wallet/refund`
     - Apply authentication guards and tenant context injection
     - _Requirements: 2.1, 2.2, 2.5, 2.6_
 
-  - [ ] 6.5 Write property tests for P2P transfer conservation
+  - [x] 6.5 Write property tests for P2P transfer conservation
     - **Property 4: P2P Transfer Conservation** — Sender's balance decrease equals recipient's balance increase exactly
     - **Validates: Requirements 2.2**
 
-  - [ ] 6.6 Write property tests for insufficient balance and invalid amount rejection
+  - [x] 6.6 Write property tests for insufficient balance and invalid amount rejection
     - **Property 5: Insufficient Balance Rejection** — Transfer exceeding balance is rejected; sender balance unchanged
     - **Property 6: Invalid Amount Rejection** — Zero/negative amounts rejected; no ledger entries created
     - **Validates: Requirements 2.3, 2.4**
 
-- [ ] 7. Webhook ingress module
-  - [~] 7.1 Create webhook module with ingress controller
+- [x] 7. Webhook ingress module
+  - [x] 7.1 Create webhook module with ingress controller
     - Create `apps/api/src/modules/webhook/webhook.module.ts`
     - Create `webhook-ingress.controller.ts` with POST `/webhooks/:provider` endpoint
     - Preserve raw body for signature verification
@@ -177,25 +177,25 @@ This plan implements three pillars on top of the Phase 0 foundations (tenancy, i
     - Respond with HTTP 200 within acceptable time; return 401 for invalid signatures
     - _Requirements: 5.1, 5.3, 5.6_
 
-  - [~] 7.2 Implement webhook service with deduplication and event publishing
+  - [x] 7.2 Implement webhook service with deduplication and event publishing
     - Create `apps/api/src/modules/webhook/webhook.service.ts`
     - Normalize events into `NormalizedWebhookEvent` format
     - Deduplicate by `providerEventId` using Redis SET with 7-day TTL
     - Publish normalized events to BullMQ `webhook-events` queue
     - _Requirements: 5.2, 5.4_
 
-  - [~] 7.3 Implement webhook processor with retry logic
+  - [x] 7.3 Implement webhook processor with retry logic
     - Create BullMQ consumer for `webhook-events` queue
     - Route event types to handlers: `payment.succeeded` → WalletService.complete(), `refund.succeeded` → WalletService.refund()
     - Configure 3 retry attempts with exponential backoff; log failure after exhaustion
     - _Requirements: 5.5_
 
-  - [ ] 7.4 Write property test for webhook idempotency
+  - [x] 7.4 Write property test for webhook idempotency
     - **Property 8: Webhook Idempotency** — Reprocessing same providerEventId produces no additional side effects and returns HTTP 200
     - **Validates: Requirements 5.4**
 
-- [ ] 8. Billing module
-  - [~] 8.1 Implement subscription service
+- [x] 8. Billing module
+  - [x] 8.1 Implement subscription service
     - Create `apps/api/src/modules/billing/billing.module.ts`
     - Create `subscription.service.ts` that creates Stripe Billing subscriptions for tenant plan tiers
     - Implement add/remove subscription items when modules are enabled/disabled
@@ -204,7 +204,7 @@ This plan implements three pillars on top of the Phase 0 foundations (tenancy, i
     - Store Stripe subscription ID and billing period on local `subscriptions` record
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6_
 
-  - [~] 8.2 Implement usage metering service
+  - [x] 8.2 Implement usage metering service
     - Create `usage.service.ts` that records usage_records (tenant ID, metric type, quantity)
     - Create `usage-push.processor.ts` as nightly BullMQ repeatable job
     - Aggregate and push usage records to Stripe metered usage API with idempotency keys
@@ -212,18 +212,18 @@ This plan implements three pillars on top of the Phase 0 foundations (tenancy, i
     - Implement current-period usage query grouped by metric
     - _Requirements: 8.1, 8.2, 8.3, 8.4, 8.5_
 
-  - [~] 8.3 Create billing controller with REST endpoints
+  - [x] 8.3 Create billing controller with REST endpoints
     - Create `subscription.controller.ts` with POST `/billing/subscriptions`, PATCH `/billing/subscriptions/:id/items`
     - Create usage endpoints: POST `/billing/usage` (record event), GET `/billing/usage` (query current period)
     - Apply platform admin guards for subscription management
     - _Requirements: 7.1, 8.1, 8.5_
 
-  - [ ] 8.4 Write property test for usage record idempotency
+  - [x] 8.4 Write property test for usage record idempotency
     - **Property 10: Usage Record Idempotency** — Same idempotency key does not result in duplicate charges regardless of retry count
     - **Validates: Requirements 8.3**
 
-- [ ] 9. Dashboard metrics API
-  - [~] 9.1 Implement metrics service and controller
+- [x] 9. Dashboard metrics API
+  - [x] 9.1 Implement metrics service and controller
     - Create `apps/api/src/modules/dashboard/dashboard.module.ts`
     - Implement `MetricsService` with queries against tenant database
     - Compute GMV (sum actual_fare for completed jobs, 30 days) with growth percentage vs prior 30 days
@@ -233,41 +233,41 @@ This plan implements three pillars on top of the Phase 0 foundations (tenancy, i
     - Create GET `/dashboard/metrics` endpoint
     - _Requirements: 17.1, 17.2, 17.3, 17.4, 17.6_
 
-  - [~] 9.2 Implement jobs-by-module endpoint
+  - [x] 9.2 Implement jobs-by-module endpoint
     - Implement daily job counts grouped by module type for last 7 days
     - Create GET `/dashboard/jobs-by-module` endpoint
     - Scope all queries to authenticated tenant's database context
     - _Requirements: 17.5, 17.6_
 
-  - [ ] 9.3 Write property test for dashboard metrics tenant isolation
+  - [x] 9.3 Write property test for dashboard metrics tenant isolation
     - **Property 11: Dashboard Metrics Tenant Isolation** — Query for tenant A never includes data from tenant B's database
     - **Validates: Requirements 17.6**
 
-- [~] 10. Checkpoint — Backend services complete
+- [x] 10. Checkpoint — Backend services complete
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 11. Tenant portal — Project setup, layout, and authentication
-  - [~] 11.1 Initialize Next.js 15 portal application
+- [x] 11. Tenant portal — Project setup, layout, and authentication
+  - [x] 11.1 Initialize Next.js 15 portal application
     - Create `apps/portal/` with Next.js 15 App Router, TypeScript, Tailwind CSS
     - Configure `tailwind.config.ts` with Vima design tokens: dark bg (#141414), orange accent (#FF6B3D), green success (#4ADE80)
     - Set up `next.config.ts` with API proxy/env configuration
     - Add clean sans-serif typeface; configure bold headings
     - _Requirements: 11.3, 11.4, 11.5, 11.7_
 
-  - [~] 11.2 Implement portal authentication layer
+  - [x] 11.2 Implement portal authentication layer
     - Create `src/lib/auth.ts` with token storage (access token in memory, refresh via httpOnly cookie)
     - Create `src/lib/api-client.ts` fetch wrapper that attaches Bearer token, handles 401 with silent refresh
     - Create `src/hooks/use-auth.ts` for auth state management
     - Create Next.js middleware to check refresh cookie on protected routes; redirect to login if absent
     - _Requirements: 13.1, 13.2, 13.5, 13.6_
 
-  - [~] 11.3 Create login page
+  - [x] 11.3 Create login page
     - Create `src/app/login/page.tsx` with email + password form
     - POST to `/auth/login`, store tokens, redirect to `/overview`
     - Verify user holds owner/admin/ops/finance role for the resolved tenant; show access denied if lacking
     - _Requirements: 13.1, 13.3, 13.4_
 
-  - [~] 11.4 Implement sidebar navigation and root layout
+  - [x] 11.4 Implement sidebar navigation and root layout
     - Create `src/app/layout.tsx` with dark mode root layout (#141414 background)
     - Create `src/components/layout/sidebar.tsx` with navigation sections: Overview, Modules, Providers, Payments
     - Create `src/components/layout/nav-item.tsx` with active state highlighting (orange #FF6B3D)
@@ -275,94 +275,94 @@ This plan implements three pillars on top of the Phase 0 foundations (tenancy, i
     - Route to corresponding pages on click; highlight active item
     - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.6_
 
-- [ ] 12. Tenant portal — Overview dashboard
-  - [~] 12.1 Implement dashboard metric cards
+- [x] 12. Tenant portal — Overview dashboard
+  - [x] 12.1 Implement dashboard metric cards
     - Create `src/components/dashboard/metric-card.tsx` displaying value, label, and growth indicator
     - Create `src/app/overview/page.tsx` fetching from `/dashboard/metrics`
     - Display cards for: GMV (30d), Completed Jobs (30d), Active Providers, Completion Rate
     - Show percentage change with green (#4ADE80) for positive growth
     - _Requirements: 9.1, 9.2_
 
-  - [~] 12.2 Implement jobs-by-module bar chart
+  - [x] 12.2 Implement jobs-by-module bar chart
     - Create `src/components/dashboard/jobs-chart.tsx` with bar chart (last 7 days, grouped by module)
     - Highlight top-performing module with orange accent (#FF6B3D)
     - _Requirements: 9.3, 9.4_
 
-  - [~] 12.3 Implement loading and error states
+  - [x] 12.3 Implement loading and error states
     - Create `src/components/dashboard/metric-skeleton.tsx` for skeleton loading states
     - Display skeleton states while data is loading
     - Show error state with retry button on API failure
     - _Requirements: 9.5, 9.6_
 
-- [ ] 13. Tenant portal — Modules page
-  - [~] 13.1 Implement module management page
+- [x] 13. Tenant portal — Modules page
+  - [x] 13.1 Implement module management page
     - Create `src/app/modules/page.tsx` displaying available modules with toggle switches
     - Display modules: Ride Hailing, Food Delivery, Courier, Groceries, Home Services
     - Fetch current entitlements state on page load to reflect toggle positions
     - _Requirements: 10.1, 10.6_
 
-  - [~] 13.2 Implement module toggle logic with confirmation
+  - [x] 13.2 Implement module toggle logic with confirmation
     - Call entitlements API on toggle on; display success confirmation
     - Show confirmation dialog before disabling a module
     - Update billing subscription items via Billing_Service on state change
     - Revert toggle to previous state on API failure; display error message
     - _Requirements: 10.2, 10.3, 10.4, 10.5_
 
-- [ ] 14. Tenant portal — Providers page
-  - [~] 14.1 Implement providers list page
+- [x] 14. Tenant portal — Providers page
+  - [x] 14.1 Implement providers list page
     - Create `src/app/providers/page.tsx` with paginated provider table
     - Display columns: name, status (online/offline), rating, total completed jobs
     - Show total active providers count and breakdown by capability (ride, delivery, parcel)
     - Implement search/filter by name or phone number
     - _Requirements: 16.1, 16.2, 16.4_
 
-  - [~] 14.2 Implement provider detail view
+  - [x] 14.2 Implement provider detail view
     - Create `src/app/providers/[id]/page.tsx` showing profile, documents, and earnings summary
     - Navigate to detail view on provider row click
     - _Requirements: 16.3_
 
-- [ ] 15. Tenant portal — Payments page
-  - [~] 15.1 Implement payments page with PSP connection status
+- [x] 15. Tenant portal — Payments page
+  - [x] 15.1 Implement payments page with PSP connection status
     - Create `src/app/payments/page.tsx` displaying current PSP connection status
     - Show connected provider, verification state, last verified date
     - Display recent transactions summary (last 10 payments with status, amount, date) when verified
     - _Requirements: 12.1, 12.6_
 
-  - [~] 15.2 Implement PSP setup flow
+  - [x] 15.2 Implement PSP setup flow
     - Create `src/components/payments/psp-setup-flow.tsx` for connecting Stripe or Paystack
     - Display setup prompt when no PSP is connected
     - Submit credentials to PSP_Connection API; show verification progress
     - Display success state with provider details on verification; show error with retry on failure
     - _Requirements: 12.2, 12.3, 12.4, 12.5_
 
-- [~] 16. Checkpoint — Portal pages complete
+- [x] 16. Checkpoint — Portal pages complete
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 17. Wire modules into AppModule and integration
-  - [~] 17.1 Register all new modules in AppModule
+- [x] 17. Wire modules into AppModule and integration
+  - [x] 17.1 Register all new modules in AppModule
     - Import PaymentsModule, WebhookModule, BillingModule, DashboardModule into `app.module.ts`
     - Ensure module dependency order is correct (DatabaseModule available globally)
     - Verify all controllers are accessible and guards are applied
     - _Requirements: 1.1–17.6 (integration)_
 
-  - [~] 17.2 Wire webhook processor to wallet service completion
+  - [x] 17.2 Wire webhook processor to wallet service completion
     - Ensure `payment.succeeded` events from webhook processor call `WalletService.completeTopup()`
     - Ensure `refund.succeeded` events trigger `WalletService.processRefund()`
     - Ensure module enable/disable events propagate to BillingModule subscription items
     - _Requirements: 2.1, 2.6, 7.2, 10.4_
 
-  - [ ] 17.3 Write integration tests for webhook E2E flow
+  - [x] 17.3 Write integration tests for webhook E2E flow
     - Send signed Stripe payload → verify signature → normalize → process → ledger entry created
     - Send signed Paystack payload → same flow verification
     - Send invalid signature → verify 401 response
     - _Requirements: 5.1, 5.2, 5.3_
 
-  - [ ] 17.4 Write integration tests for Docker environment
+  - [x] 17.4 Write integration tests for Docker environment
     - Verify `docker compose up` → all health checks pass → API responds at /health
     - Verify migrations run on fresh database before API starts accepting connections
     - _Requirements: 14.2, 14.6, 15.1_
 
-- [~] 18. Final checkpoint — All tests passing, feature complete
+- [x] 18. Final checkpoint — All tests passing, feature complete
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes
