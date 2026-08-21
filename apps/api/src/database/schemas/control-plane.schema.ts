@@ -199,6 +199,43 @@ export const appBuilds = pgTable('app_builds', {
   completedAt: timestamp('completed_at'),
 });
 
+// --- NOTIFICATION CONFIGURATION ---
+
+export const notificationProviderEnum = pgEnum('notification_provider', [
+  'twilio',
+  'africas_talking',
+  'fcm',
+  'resend',
+  'ses',
+]);
+
+export const tenantNotificationConfig = pgTable('tenant_notification_config', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  channel: varchar('channel', { length: 20 }).notNull(), // push, sms, whatsapp, email
+  provider: notificationProviderEnum('provider').notNull(),
+  encryptedCredentials: text('encrypted_credentials').notNull(), // envelope encrypted
+  region: varchar('region', { length: 50 }), // optional regional targeting (e.g., 'africa', 'europe')
+  fallbackChannel: varchar('fallback_channel', { length: 20 }), // channel to try if primary fails
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const tenantQuietHours = pgTable('tenant_quiet_hours', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  startHour: integer('start_hour').notNull(), // 0-23
+  endHour: integer('end_hour').notNull(), // 0-23
+  timezone: varchar('timezone', { length: 50 }).notNull(), // IANA timezone e.g. 'Africa/Nairobi'
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// --- AUDIT ---
+
 export const platformAuditLog = pgTable('platform_audit_log', {
   id: uuid('id').defaultRandom().primaryKey(),
   actorId: uuid('actor_id'),
