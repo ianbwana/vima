@@ -1,0 +1,66 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.2.0
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:20.11
+      - image: cimg/postgres:16.2
+        environment:
+          POSTGRES_USER: vima
+          POSTGRES_PASSWORD: vimadev
+          POSTGRES_DB: vima_control
+      - image: cimg/redis:7.2
+    environment:
+      CONTROL_PLANE_DATABASE_URL: postgresql://vima:vimadev@localhost:5432/vima_control
+      TENANT_DATABASE_BASE_URL: postgresql://vima:vimadev@localhost:5432
+      REDIS_URL: redis://localhost:6379
+      JWT_SECRET: ci-test-jwt-secret
+      JWT_REFRESH_SECRET: ci-test-refresh-secret
+      PSP_ENCRYPTION_KEY: ci-test-encryption-key-32chars!!
+      STRIPE_SECRET_KEY: sk_test_placeholder
+      STRIPE_WEBHOOK_SECRET: whsec_placeholder
+      NODE_ENV: test
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Install workspace dependencies
+          command: npm ci --legacy-peer-deps
+      - run:
+          name: Build PSP adapters package
+          command: cd packages/psp-adapters && npx tsc --skipLibCheck
+      - run:
+          name: Build API
+          command: cd apps/api && npx nest build
+      - run:
+          name: Run API tests
+          command: cd apps/api && npx jest --no-coverage --passWithNoTests --forceExit
+      - run:
+          name: Build Portal
+          command: cd apps/portal && npx next build
+
+  lint:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Install workspace dependencies
+          command: npm ci --legacy-peer-deps
+      - run:
+          name: TypeScript check (API)
+          command: cd apps/api && npx tsc --noEmit --skipLibCheck
+
+workflows:
+  ci:
+    jobs:
+      - lint
+      - build-and-test:
+          requires:
+            - lint
