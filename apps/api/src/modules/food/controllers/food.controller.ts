@@ -23,7 +23,7 @@ export class FoodController {
    */
   @Get('restaurants')
   async listRestaurants(@Req() req: any, @Query('zone') zoneId?: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const merchants = await this.catalogService.listMerchants(tenantId, 'restaurant', zoneId);
     return { restaurants: merchants };
   }
@@ -34,7 +34,7 @@ export class FoodController {
    */
   @Get('restaurants/:id/menu')
   async getMenu(@Req() req: any, @Param('id') merchantId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const menu = await this.catalogService.getFullMenu(tenantId, merchantId);
     return { menu };
   }
@@ -45,7 +45,7 @@ export class FoodController {
    */
   @Post('orders')
   async placeOrder(@Req() req: any, @Body() dto: PlaceOrderDto) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const order = await this.orderService.placeOrder(tenantId, userId, dto);
     return { order };
   }
@@ -56,7 +56,7 @@ export class FoodController {
    */
   @Get('orders/:id')
   async getOrder(@Req() req: any, @Param('id') orderId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const order = await this.orderService.getOrder(tenantId, orderId);
     return { order };
   }
@@ -67,7 +67,7 @@ export class FoodController {
    */
   @Get('orders')
   async listOrders(@Req() req: any) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const orders = await this.orderService.listCustomerOrders(tenantId, userId);
     return { orders };
   }
