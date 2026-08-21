@@ -36,7 +36,7 @@ export class RidesController {
    */
   @Post('estimate')
   async getFareEstimate(@Req() req: any, @Body() dto: FareEstimateDto) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const estimates = await this.fareService.getEstimates(
       tenantId,
       dto.pickupLat,
@@ -54,7 +54,7 @@ export class RidesController {
    */
   @Post('request')
   async requestRide(@Req() req: any, @Body() dto: RequestRideDto) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const trip = await this.rideService.requestRide(tenantId, userId, dto);
     return { trip };
   }
@@ -65,7 +65,7 @@ export class RidesController {
    */
   @Get('trips/:id')
   async getTripStatus(@Req() req: any, @Param('id') tripId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const trip = await this.rideService.getTripState(tenantId, tripId);
     return { trip };
   }
@@ -76,7 +76,7 @@ export class RidesController {
    */
   @Get('active')
   async getActiveTrip(@Req() req: any) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const trip = await this.rideService.getActiveTrip(tenantId, userId);
     return { trip };
   }
@@ -91,7 +91,7 @@ export class RidesController {
     @Param('id') tripId: string,
     @Body() dto: CancelRideDto,
   ) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     await this.rideService.cancelRide(tenantId, tripId, userId, dto);
     return { success: true, message: 'Ride cancelled' };
   }
@@ -106,7 +106,7 @@ export class RidesController {
     @Param('id') tripId: string,
     @Body() dto: RateRideDto,
   ) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     await this.rideService.rateRide(tenantId, tripId, userId, dto);
     return { success: true, message: 'Rating submitted' };
   }
@@ -119,7 +119,7 @@ export class RidesController {
    */
   @Post('driver/online')
   async toggleOnline(@Req() req: any, @Body() dto: ToggleOnlineDto) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     await this.driverLocation.setOnlineStatus(tenantId, providerId, dto.online);
     return { success: true, online: dto.online };
   }
@@ -130,7 +130,7 @@ export class RidesController {
    */
   @Post('driver/location')
   async updateLocation(@Req() req: any, @Body() dto: UpdateLocationDto) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     await this.driverLocation.updateLocation(tenantId, providerId, dto.lat, dto.lng);
     return { success: true };
   }

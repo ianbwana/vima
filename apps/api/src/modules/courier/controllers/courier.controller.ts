@@ -32,7 +32,7 @@ export class CourierController {
    */
   @Post('send')
   async sendParcel(@Req() req: any, @Body() dto: SendParcelDto) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const parcel = await this.courierService.sendParcel(tenantId, userId, dto);
     return { parcel };
   }
@@ -43,7 +43,7 @@ export class CourierController {
    */
   @Get('parcels/:id')
   async getParcel(@Req() req: any, @Param('id') parcelId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const parcel = await this.courierService.getParcel(tenantId, parcelId);
     return { parcel };
   }
@@ -54,7 +54,7 @@ export class CourierController {
    */
   @Get('parcels')
   async listParcels(@Req() req: any) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const parcels = await this.courierService.listSenderParcels(tenantId, userId);
     return { parcels };
   }
@@ -67,7 +67,7 @@ export class CourierController {
    */
   @Post('accept/:id')
   async acceptParcel(@Req() req: any, @Param('id') parcelId: string) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const parcel = await this.courierService.acceptParcel(tenantId, parcelId, providerId);
     return { success: !!parcel, parcel };
   }
@@ -78,7 +78,7 @@ export class CourierController {
    */
   @Post('pickup')
   async confirmPickup(@Req() req: any, @Body() dto: ConfirmPickupDto) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const parcel = await this.courierService.confirmPickup(tenantId, dto.parcelId, providerId);
     return { parcel };
   }
@@ -89,7 +89,7 @@ export class CourierController {
    */
   @Post('deliver')
   async confirmDelivery(@Req() req: any, @Body() dto: ConfirmDeliveryDto) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const parcel = await this.courierService.confirmDelivery(tenantId, dto, providerId);
     return { parcel };
   }

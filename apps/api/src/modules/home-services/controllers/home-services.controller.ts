@@ -18,35 +18,35 @@ export class HomeServicesController {
 
   @Get('categories')
   async listCategories(@Req() req: any, @Query('parent') parentId?: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const categories = await this.homeServices.listCategories(tenantId, parentId);
     return { categories };
   }
 
   @Get('categories/:id/price-cards')
   async getPriceCards(@Req() req: any, @Param('id') categoryId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const priceCards = await this.homeServices.getCategoryPriceCards(tenantId, categoryId);
     return { priceCards };
   }
 
   @Post('bookings')
   async createBooking(@Req() req: any, @Body() dto: CreateBookingDto) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const booking = await this.homeServices.createBooking(tenantId, userId, dto);
     return { booking };
   }
 
   @Get('bookings')
   async listBookings(@Req() req: any) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const bookings = await this.homeServices.listCustomerBookings(tenantId, userId);
     return { bookings };
   }
 
   @Get('bookings/:id')
   async getBooking(@Req() req: any, @Param('id') bookingId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const booking = await this.homeServices.getBooking(tenantId, bookingId);
     const quotes = await this.homeServices.getBookingQuotes(tenantId, bookingId);
     return { booking, quotes };
@@ -54,14 +54,14 @@ export class HomeServicesController {
 
   @Post('bookings/:id/accept-quote/:quoteId')
   async acceptQuote(@Req() req: any, @Param('id') bookingId: string, @Param('quoteId') quoteId: string) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const booking = await this.homeServices.acceptQuote(tenantId, quoteId, userId);
     return { booking };
   }
 
   @Post('bookings/:id/cancel')
   async cancelBooking(@Req() req: any, @Param('id') bookingId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const booking = await this.homeServices.cancelBooking(tenantId, bookingId);
     return { booking };
   }
@@ -70,42 +70,42 @@ export class HomeServicesController {
 
   @Post('provider/bookings/:id/accept')
   async acceptBooking(@Req() req: any, @Param('id') bookingId: string) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const booking = await this.homeServices.acceptBooking(tenantId, bookingId, providerId);
     return { booking };
   }
 
   @Post('provider/quotes')
   async submitQuote(@Req() req: any, @Body() dto: SubmitQuoteDto) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const quote = await this.homeServices.submitQuote(tenantId, providerId, dto);
     return { quote };
   }
 
   @Post('provider/bookings/:id/en-route')
   async markEnRoute(@Req() req: any, @Param('id') bookingId: string) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const booking = await this.homeServices.markEnRoute(tenantId, bookingId, providerId);
     return { booking };
   }
 
   @Post('provider/bookings/:id/start')
   async startJob(@Req() req: any, @Param('id') bookingId: string) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const booking = await this.homeServices.startJob(tenantId, bookingId, providerId);
     return { booking };
   }
 
   @Post('provider/bookings/:id/complete')
   async completeJob(@Req() req: any, @Param('id') bookingId: string, @Body() body: { photos?: string[] }) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const booking = await this.homeServices.completeJob(tenantId, bookingId, providerId, body.photos);
     return { booking };
   }
 
   @Get('provider/bookings')
   async listProviderBookings(@Req() req: any) {
-    const { tenantId, sub: providerId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const providerId = req.user?.sub;
     const bookings = await this.homeServices.listProviderBookings(tenantId, providerId);
     return { bookings };
   }

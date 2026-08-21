@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { NavItem } from './nav-item';
 
 const navItems = [
@@ -201,6 +202,19 @@ export function Sidebar() {
               <p className="text-xs text-text-muted truncate">admin@tenant.com</p>
             </div>
           </div>
+          <button
+            onClick={() => {
+              document.cookie = 'vima_session=; path=/; max-age=0';
+              document.cookie = 'vima_role=; path=/; max-age=0';
+              window.location.href = '/login';
+            }}
+            className="mt-3 w-full flex items-center gap-2 px-3 py-2 text-sm text-text-muted hover:text-red-400 hover:bg-background-elevated rounded-lg transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+            </svg>
+            Sign out
+          </button>
         </div>
       </aside>
     </>

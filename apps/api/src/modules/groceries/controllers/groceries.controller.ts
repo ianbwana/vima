@@ -25,7 +25,7 @@ export class GroceriesController {
    */
   @Get('stores')
   async listStores(@Req() req: any, @Query('zone') zoneId?: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const merchants = await this.catalogService.listMerchants(tenantId, 'grocery_store', zoneId);
     return { stores: merchants };
   }
@@ -36,7 +36,7 @@ export class GroceriesController {
    */
   @Get('stores/:id/catalog')
   async getCatalog(@Req() req: any, @Param('id') merchantId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const menu = await this.catalogService.getFullMenu(tenantId, merchantId);
     return { catalog: menu };
   }
@@ -47,7 +47,7 @@ export class GroceriesController {
    */
   @Post('orders')
   async placeOrder(@Req() req: any, @Body() dto: PlaceOrderDto) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const order = await this.orderService.placeOrder(tenantId, userId, dto);
     return { order };
   }
@@ -58,7 +58,7 @@ export class GroceriesController {
    */
   @Get('orders/:id')
   async getOrder(@Req() req: any, @Param('id') orderId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const order = await this.orderService.getOrder(tenantId, orderId);
     const substitutions = await this.groceryOrderService.getOrderSubstitutions(tenantId, orderId);
     return { order, substitutions };
@@ -74,7 +74,7 @@ export class GroceriesController {
     @Param('id') substitutionId: string,
     @Body() body: { approved: boolean },
   ) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const result = await this.groceryOrderService.respondToSubstitution(
       tenantId,
       substitutionId,
@@ -89,7 +89,7 @@ export class GroceriesController {
    */
   @Get('orders')
   async listOrders(@Req() req: any) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const orders = await this.orderService.listCustomerOrders(tenantId, userId);
     return { orders };
   }

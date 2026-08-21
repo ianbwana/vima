@@ -37,14 +37,14 @@ export class RidesAdminController {
 
   @Get('vehicle-classes')
   async listVehicleClasses(@Req() req: any) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const classes = await db.select().from(schema.vehicleClasses).orderBy(schema.vehicleClasses.sortOrder);
     return { vehicleClasses: classes };
   }
 
   @Post('vehicle-classes')
   async createVehicleClass(@Req() req: any, @Body() dto: CreateVehicleClassDto) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const [created] = await db
       .insert(schema.vehicleClasses)
       .values({
@@ -63,7 +63,7 @@ export class RidesAdminController {
     @Param('id') id: string,
     @Body() dto: UpdateVehicleClassDto,
   ) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const updateData: Record<string, any> = {};
     if (dto.name !== undefined) updateData.name = dto.name;
     if (dto.iconUrl !== undefined) updateData.iconUrl = dto.iconUrl;
@@ -81,7 +81,7 @@ export class RidesAdminController {
 
   @Delete('vehicle-classes/:id')
   async deleteVehicleClass(@Req() req: any, @Param('id') id: string) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     await db.update(schema.vehicleClasses).set({ active: false }).where(eq(schema.vehicleClasses.id, id));
     return { success: true };
   }
@@ -90,7 +90,7 @@ export class RidesAdminController {
 
   @Get('fare-rules')
   async listFareRules(@Req() req: any) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const rules = await db
       .select({
         id: schema.fareRules.id,
@@ -114,7 +114,7 @@ export class RidesAdminController {
 
   @Post('fare-rules')
   async createFareRule(@Req() req: any, @Body() dto: CreateFareRuleDto) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const [created] = await db
       .insert(schema.fareRules)
       .values({
@@ -138,7 +138,7 @@ export class RidesAdminController {
     @Param('id') id: string,
     @Body() dto: UpdateFareRuleDto,
   ) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const updateData: Record<string, any> = {};
     if (dto.baseFare !== undefined) updateData.baseFare = String(dto.baseFare);
     if (dto.perKm !== undefined) updateData.perKm = String(dto.perKm);
@@ -157,7 +157,7 @@ export class RidesAdminController {
 
   @Delete('fare-rules/:id')
   async deleteFareRule(@Req() req: any, @Param('id') id: string) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     await db.delete(schema.fareRules).where(eq(schema.fareRules.id, id));
     return { success: true };
   }
@@ -166,14 +166,14 @@ export class RidesAdminController {
 
   @Get('zones')
   async listZones(@Req() req: any) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const zones = await db.select().from(schema.zones).where(eq(schema.zones.active, true));
     return { zones };
   }
 
   @Post('zones')
   async createZone(@Req() req: any, @Body() dto: CreateZoneDto) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+    const db = this.tenantDb.getConnection(req.tenantId || req.user?.tenantId);
     const [created] = await db
       .insert(schema.zones)
       .values({
