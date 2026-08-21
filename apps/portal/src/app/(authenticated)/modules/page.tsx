@@ -10,14 +10,15 @@ interface ModuleInfo {
   key: string;
   name: string;
   description: string;
+  monthlyFee: number;
 }
 
 const MODULES: ModuleInfo[] = [
-  { key: 'rides', name: 'Ride Hailing', description: 'On-demand passenger transport' },
-  { key: 'food', name: 'Food Delivery', description: 'Restaurant food delivery' },
-  { key: 'courier', name: 'Courier', description: 'Package delivery services' },
-  { key: 'groceries', name: 'Groceries', description: 'Grocery shopping & delivery' },
-  { key: 'home_services', name: 'Home Services', description: 'Home maintenance & repair' },
+  { key: 'rides', name: 'Ride Hailing', description: 'On-demand passenger transport', monthlyFee: 79 },
+  { key: 'food', name: 'Food Delivery', description: 'Restaurant food delivery', monthlyFee: 99 },
+  { key: 'courier', name: 'Courier', description: 'Package delivery services', monthlyFee: 69 },
+  { key: 'groceries', name: 'Groceries', description: 'Grocery shopping & delivery', monthlyFee: 99 },
+  { key: 'home_services', name: 'Home Services', description: 'Home maintenance & repair', monthlyFee: 89 },
 ];
 
 interface Entitlements {
@@ -189,6 +190,7 @@ export default function ModulesPage() {
               <div>
                 <h3 className="text-sm font-bold text-text-primary">{mod.name}</h3>
                 <p className="mt-1 text-sm text-text-secondary">{mod.description}</p>
+                <p className="mt-1 text-xs text-accent font-medium">${mod.monthlyFee}/mo</p>
               </div>
               <ToggleSwitch
                 enabled={isEnabled}
