@@ -17,6 +17,7 @@ import { GroceriesModule } from './modules/groceries/groceries.module';
 import { CourierModule } from './modules/courier/courier.module';
 import { HomeServicesModule } from './modules/home-services/home-services.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { WhiteLabelModule } from './modules/white-label/white-label.module';
 import { DatabaseModule } from './database/database.module';
 import { HealthController } from './health.controller';
 
@@ -55,6 +56,7 @@ import { HealthController } from './health.controller';
     CourierModule,
     HomeServicesModule,
     AnalyticsModule,
+    WhiteLabelModule,
     DashboardModule,
   ],
   controllers: [HealthController],
