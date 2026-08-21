@@ -723,3 +723,15 @@ export const bookingQuotes = pgTable('booking_quotes', {
   status: quoteStatusEnum('status').notNull().default('pending'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// --- ANALYTICS ---
+
+export const analyticsDaily = pgTable('analytics_daily', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  date: varchar('date', { length: 10 }).notNull(), // YYYY-MM-DD
+  metric: varchar('metric', { length: 100 }).notNull(), // orders_completed, gmv, active_providers, etc.
+  dimension: varchar('dimension', { length: 50 }).notNull(), // 'module', 'payment_method', 'zone', 'total'
+  dimensionValue: varchar('dimension_value', { length: 100 }).notNull(), // 'rides', 'food', 'wallet', etc.
+  value: decimal('value', { precision: 15, scale: 2 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
