@@ -300,3 +300,95 @@ export const ratings = pgTable('ratings', {
   comment: text('comment'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// --- RIDE HAILING ---
+
+export const vehicleClasses = pgTable('vehicle_classes', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: varchar('name', { length: 100 }).notNull(),
+  iconUrl: text('icon_url'),
+  capacity: integer('capacity').notNull().default(4),
+  sortOrder: integer('sort_order').notNull().default(0),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const fareRules = pgTable('fare_rules', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  zoneId: uuid('zone_id')
+    .notNull()
+    .references(() => zones.id),
+  vehicleClassId: uuid('vehicle_class_id')
+    .notNull()
+    .references(() => vehicleClasses.id),
+  baseFare: decimal('base_fare', { precision: 10, scale: 2 }).notNull(),
+  perKm: decimal('per_km', { precision: 10, scale: 2 }).notNull(),
+  perMinute: decimal('per_minute', { precision: 10, scale: 2 }).notNull(),
+  minimumFare: decimal('minimum_fare', { precision: 10, scale: 2 }).notNull(),
+  surgeMultiplier: decimal('surge_multiplier', { precision: 4, scale: 2 }).notNull().default('1.00'),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  commissionRate: decimal('commission_rate', { precision: 4, scale: 2 }).notNull().default('0.20'), // 20% default
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const tripStatusEnum = pgEnum('trip_status', [
+  'requested',
+  'matching',
+  'offered',
+  'accepted',
+  'arriving',
+  'arrived',
+  'in_progress',
+  'completed',
+  'cancelled',
+  'expired',
+]);
+
+export const trips = pgTable('trips', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  jobId: uuid('job_id').references(() => jobs.id),
+  customerId: uuid('customer_id')
+    .notNull()
+    .references(() => users.id),
+  providerId: uuid('provider_id').references(() => providers.id),
+  vehicleClassId: uuid('vehicle_class_id')
+    .notNull()
+    .references(() => vehicleClasses.id),
+  zoneId: uuid('zone_id').references(() => zones.id),
+  status: tripStatusEnum('status').notNull().default('requested'),
+  pickupLat: decimal('pickup_lat', { precision: 10, scale: 7 }).notNull(),
+  pickupLng: decimal('pickup_lng', { precision: 10, scale: 7 }).notNull(),
+  pickupAddress: text('pickup_address'),
+  dropoffLat: decimal('dropoff_lat', { precision: 10, scale: 7 }).notNull(),
+  dropoffLng: decimal('dropoff_lng', { precision: 10, scale: 7 }).notNull(),
+  dropoffAddress: text('dropoff_address'),
+  estimatedFare: decimal('estimated_fare', { precision: 10, scale: 2 }),
+  actualFare: decimal('actual_fare', { precision: 10, scale: 2 }),
+  estimatedDistanceKm: decimal('estimated_distance_km', { precision: 10, scale: 2 }),
+  estimatedDurationMin: decimal('estimated_duration_min', { precision: 10, scale: 2 }),
+  actualDistanceKm: decimal('actual_distance_km', { precision: 10, scale: 2 }),
+  actualDurationMin: decimal('actual_duration_min', { precision: 10, scale: 2 }),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  surgeMultiplier: decimal('surge_multiplier', { precision: 4, scale: 2 }).default('1.00'),
+  commissionRate: decimal('commission_rate', { precision: 4, scale: 2 }),
+  paymentMethod: varchar('payment_method', { length: 20 }).default('wallet'), // wallet, card, cash
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  requestedAt: timestamp('requested_at').defaultNow().notNull(),
+  acceptedAt: timestamp('accepted_at'),
+  arrivedAt: timestamp('arrived_at'),
+  startedAt: timestamp('started_at'),
+  completedAt: timestamp('completed_at'),
+  cancelledAt: timestamp('cancelled_at'),
+  cancelledBy: uuid('cancelled_by'),
+  cancellationReason: text('cancellation_reason'),
+});
+
+export const tripTracks = pgTable('trip_tracks', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tripId: uuid('trip_id')
+    .notNull()
+    .references(() => trips.id),
+  lat: decimal('lat', { precision: 10, scale: 7 }).notNull(),
+  lng: decimal('lng', { precision: 10, scale: 7 }).notNull(),
+  recordedAt: timestamp('recorded_at').defaultNow().notNull(),
+});
