@@ -12,15 +12,22 @@ export class TenantResolutionMiddleware implements NestMiddleware {
   constructor(private readonly tenancyService: TenancyService) {}
 
   async use(req: Request, _res: Response, next: NextFunction) {
-    const tenantId = await this.resolveTenant(req);
+    try {
+      const tenantId = await this.resolveTenant(req);
 
-    if (!tenantId) {
+      if (!tenantId) {
+        throw new HttpException('Tenant could not be resolved', HttpStatus.BAD_REQUEST);
+      }
+
+      // Attach tenant context to request
+      (req as any).tenantId = tenantId;
+      next();
+    } catch (err) {
+      if (err instanceof HttpException) throw err;
+      // Log unexpected errors and pass through
+      console.error('[TenantResolution] Unexpected error:', err);
       throw new HttpException('Tenant could not be resolved', HttpStatus.BAD_REQUEST);
     }
-
-    // Attach tenant context to request
-    (req as any).tenantId = tenantId;
-    next();
   }
 
   private async resolveTenant(req: Request): Promise<string | null> {
@@ -37,11 +44,18 @@ export class TenantResolutionMiddleware implements NestMiddleware {
       if (tenantBySlug) return tenantBySlug.id;
     }
 
-    // 3. Try X-Tenant header
+    // 3. Try X-Tenant header (supports both UUID and slug)
     const headerTenantId = req.headers['x-tenant-id'] as string;
     if (headerTenantId) {
-      const tenantByHeader = await this.tenancyService.findById(headerTenantId);
-      if (tenantByHeader) return tenantByHeader.id;
+      // Detect if it's a UUID or slug
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(headerTenantId);
+      if (isUuid) {
+        const tenantByHeader = await this.tenancyService.findById(headerTenantId);
+        if (tenantByHeader) return tenantByHeader.id;
+      } else {
+        const tenantBySlug = await this.tenancyService.findBySlug(headerTenantId);
+        if (tenantBySlug) return tenantBySlug.id;
+      }
     }
 
     // 4. Will be resolved from JWT later (handled by auth guard)

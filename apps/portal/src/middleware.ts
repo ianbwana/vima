@@ -18,10 +18,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check for the refresh token cookie (presence indicates an active session)
-  const refreshToken = request.cookies.get('refreshToken');
+  // Check for the session cookie (presence indicates an active session)
+  const session = request.cookies.get('vima_session');
 
-  if (!refreshToken) {
+  if (!session) {
     const loginUrl = new URL('/login', request.url);
     return NextResponse.redirect(loginUrl);
   }

@@ -45,6 +45,6 @@ import { FareSettlementService } from './services/fare-settlement.service';
     FareSettlementService,
     RideGateway,
   ],
-  exports: [RideService, FareService, DriverLocationService],
+  exports: [RideService, FareService, DriverLocationService, DispatchService],
 })
 export class RidesModule {}

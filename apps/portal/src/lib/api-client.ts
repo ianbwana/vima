@@ -108,6 +108,7 @@ export async function apiClient<T = unknown>(
   const makeRequest = () => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
+      'X-Tenant-Id': 'demo',
       ...(customHeaders as Record<string, string>),
     };
 
