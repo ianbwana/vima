@@ -51,7 +51,7 @@ export default function LandingPage() {
             <Link href="/login" className="text-sm text-gray-600 hover:text-[#1A1A1A] transition-colors px-3 py-2">
               Book a demo
             </Link>
-            <Link href="/login" className="text-sm bg-[#1A1A1A] text-white px-4 py-2 rounded-full hover:bg-[#333] transition-colors">
+            <Link href="/signup" className="text-sm bg-[#1A1A1A] text-white px-4 py-2 rounded-full hover:bg-[#333] transition-colors">
               Start free
             </Link>
           </div>
@@ -68,7 +68,7 @@ export default function LandingPage() {
           Vima gives you the tenancy, payments, dispatch, and branding engine behind ride-hailing, delivery, and services apps — so you launch under your own name without building the platform yourself.
         </p>
         <div className="mt-8 flex items-center gap-4">
-          <Link href="/login" className="inline-flex items-center px-6 py-3 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors shadow-lg shadow-[#E91E63]/20">
+          <Link href="/signup" className="inline-flex items-center px-6 py-3 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors shadow-lg shadow-[#E91E63]/20">
             Start free
           </Link>
           <Link href="/login" className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-gray-700 hover:border-gray-500 transition-colors">
@@ -193,7 +193,7 @@ export default function LandingPage() {
               <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Subdomain hosting</li>
               <li className="flex items-center gap-2 text-gray-400"><span>—</span> No dedicated app factory</li>
             </ul>
-            <Link href="/login" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 border border-gray-300 rounded-full text-sm font-medium hover:border-gray-500 transition-colors">
+            <Link href="/signup" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 border border-gray-300 rounded-full text-sm font-medium hover:border-gray-500 transition-colors">
               Start free
             </Link>
           </div>
@@ -209,7 +209,7 @@ export default function LandingPage() {
               <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Custom domain</li>
               <li className="flex items-center gap-2 text-gray-400"><span>—</span> No dedicated app factory</li>
             </ul>
-            <Link href="/login" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors">
+            <Link href="/signup" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors">
               Start free
             </Link>
           </div>
@@ -224,7 +224,7 @@ export default function LandingPage() {
               <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Custom domain</li>
               <li className="flex items-center gap-2"><span className="text-green-500">✓</span> App factory, builds metered</li>
             </ul>
-            <Link href="/login" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 border border-gray-300 rounded-full text-sm font-medium hover:border-gray-500 transition-colors">
+            <Link href="/signup" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 border border-gray-300 rounded-full text-sm font-medium hover:border-gray-500 transition-colors">
               Book a demo
             </Link>
           </div>
@@ -260,7 +260,7 @@ export default function LandingPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white">Ready to launch your own super-app?</h2>
           <p className="mt-4 text-gray-400">Sign up and provision your tenant in minutes.</p>
           <div className="mt-8 flex items-center justify-center gap-4">
-            <Link href="/login" className="px-6 py-3 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors shadow-lg shadow-[#E91E63]/20">
+            <Link href="/signup" className="px-6 py-3 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors shadow-lg shadow-[#E91E63]/20">
               Start free
             </Link>
             <Link href="/login" className="px-6 py-3 border border-gray-600 text-white rounded-full text-sm font-medium hover:border-gray-400 transition-colors">
