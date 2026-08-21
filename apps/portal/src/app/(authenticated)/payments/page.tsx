@@ -134,7 +134,7 @@ export default function PaymentsPage() {
           <p className="text-text-secondary">{error}</p>
           <button
             onClick={fetchData}
-            className="mt-4 px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
+            className="mt-4 px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
           >
             Retry
           </button>
@@ -158,7 +158,7 @@ export default function PaymentsPage() {
             </p>
             <a
               href="/payments/setup"
-              className="mt-4 inline-block px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
+              className="mt-4 inline-block px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
             >
               Connect Provider
             </a>
@@ -210,7 +210,7 @@ export default function PaymentsPage() {
                   </span>
                 </div>
                 {!isVerified && (
-                  <button className="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-medium hover:bg-accent-hover transition-colors">
+                  <button className="px-3 py-1.5 bg-accent text-text-primary rounded-lg text-xs font-medium hover:bg-accent-hover transition-colors">
                     Verify
                   </button>
                 )}

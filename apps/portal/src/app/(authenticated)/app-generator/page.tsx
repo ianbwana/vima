@@ -103,7 +103,7 @@ export default function AppGeneratorPage() {
             onClick={() => setCurrentStep(step.id)}
             className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-colors ${
               currentStep === step.id
-                ? 'bg-accent text-white'
+                ? 'bg-accent text-text-primary'
                 : idx < currentStepIdx
                   ? 'bg-success-muted text-success'
                   : 'bg-background-surface text-text-muted border border-border'
@@ -241,7 +241,7 @@ export default function AppGeneratorPage() {
           <div className="bg-background-surface rounded-card border border-border p-6 space-y-5">
             <h2 className="text-lg font-heading text-text-primary">Try It</h2>
             <p className="text-sm text-text-muted">Publish a demo to preview your apps on real devices before building.</p>
-            <button onClick={handlePublishDemo} disabled={loading} className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50">
+            <button onClick={handlePublishDemo} disabled={loading} className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50">
               {loading ? 'Publishing...' : 'Publish Demo'}
             </button>
             {demoSessions.length > 0 && (
@@ -315,7 +315,7 @@ export default function AppGeneratorPage() {
                 <h3 className="text-sm font-bold text-text-primary">Customer App</h3>
                 <p className="text-xs text-text-muted mt-1">{identity.customerAppName || 'Not set'}</p>
                 <p className="text-xs text-text-muted">Modules: {features.enabledModules.join(', ')}</p>
-                <button onClick={() => handleTriggerBuild('customer')} disabled={loading} className="mt-3 px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50 w-full">
+                <button onClick={() => handleTriggerBuild('customer')} disabled={loading} className="mt-3 px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50 w-full">
                   {loading ? 'Building...' : 'Generate Customer App'}
                 </button>
               </div>
@@ -324,7 +324,7 @@ export default function AppGeneratorPage() {
                   <h3 className="text-sm font-bold text-text-primary">Provider App</h3>
                   <p className="text-xs text-text-muted mt-1">{identity.providerAppName || 'Not set'}</p>
                   <p className="text-xs text-text-muted">Job types derived from modules</p>
-                  <button onClick={() => handleTriggerBuild('provider')} disabled={loading} className="mt-3 px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50 w-full">
+                  <button onClick={() => handleTriggerBuild('provider')} disabled={loading} className="mt-3 px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50 w-full">
                     {loading ? 'Building...' : 'Generate Provider App'}
                   </button>
                 </div>
@@ -369,7 +369,7 @@ export default function AppGeneratorPage() {
         <button
           onClick={() => setCurrentStep(STEPS[Math.min(STEPS.length - 1, currentStepIdx + 1)].id)}
           disabled={currentStepIdx === STEPS.length - 1}
-          className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-30"
+          className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-30"
         >
           Next
         </button>

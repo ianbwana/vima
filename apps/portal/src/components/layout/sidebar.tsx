@@ -162,11 +162,11 @@ export function Sidebar() {
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-5 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white text-sm font-bold">
+            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-text-primary text-sm font-bold">
               V
             </div>
             <div>
-              <p className="text-sm font-semibold text-text-primary">Vima Tenant</p>
+              <p className="text-sm font-semibold text-text-primary font-serif">Vima</p>
               <p className="text-xs text-text-muted">Admin Portal</p>
             </div>
           </div>

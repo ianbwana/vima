@@ -333,7 +333,7 @@ export default function ProviderDetailPage() {
             <p className="text-text-secondary">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
+              className="mt-4 px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
             >
               Retry
             </button>

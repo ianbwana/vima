@@ -93,7 +93,7 @@ export default function PlatformAdminPage() {
                     <span className="text-xs px-2 py-0.5 rounded-full bg-background-elevated text-text-muted">{tenant.tier}</span>
                     <button
                       onClick={() => { setSelectedTenant(tenant); setViewMode('tenant'); }}
-                      className="ml-2 px-3 py-1 text-xs bg-accent text-white rounded-md hover:bg-accent-hover transition-colors"
+                      className="ml-2 px-3 py-1 text-xs bg-accent text-text-primary rounded-md hover:bg-accent-hover transition-colors"
                     >
                       View as Tenant
                     </button>

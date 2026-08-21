@@ -101,7 +101,7 @@ export default function UsersPage() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${
-              activeTab === tab.id ? 'bg-accent text-white' : 'text-text-secondary hover:text-text-primary'
+              activeTab === tab.id ? 'bg-accent text-text-primary' : 'text-text-secondary hover:text-text-primary'
             }`}
           >
             <span>{tab.icon}</span>
