@@ -97,8 +97,14 @@ describe('Usage Record Idempotency (Property 10)', () => {
         // Generate arbitrary quantity (positive integer)
         fc.integer({ min: 1, max: 100000 }),
         // Generate a period key (date string)
-        fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }).map(
-          (d) => d.toISOString().split('T')[0],
+        fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }).chain(
+          (d) => {
+            try {
+              return fc.constant(d.toISOString().split('T')[0]);
+            } catch {
+              return fc.constant('2025-01-15');
+            }
+          },
         ),
         // Generate the number of times to push the same usage (simulating retries/redundant pushes)
         fc.integer({ min: 1, max: 10 }),
