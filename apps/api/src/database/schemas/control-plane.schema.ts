@@ -245,3 +245,37 @@ export const platformAuditLog = pgTable('platform_audit_log', {
   details: jsonb('details').$type<Record<string, unknown>>(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// --- WHITE-LABEL & THEMING ---
+
+export const assetTypeEnum = pgEnum('asset_type', [
+  'logo',
+  'splash',
+  'icon',
+  'hero',
+  'guideline',
+  'app_icon',
+  'favicon',
+]);
+
+export const tenantThemes = pgTable('tenant_themes', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  tokens: jsonb('tokens').$type<Record<string, unknown>>().notNull(),
+  published: boolean('published').default(false).notNull(),
+  version: integer('version').notNull().default(1),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const tenantAssets = pgTable('tenant_assets', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  type: assetTypeEnum('type').notNull(),
+  url: text('url').notNull(),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
