@@ -9,8 +9,16 @@ import { BillingModule } from './modules/billing/billing.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { WebhookModule } from './modules/webhook/webhook.module';
-import { RidesModule } from './modules/rides/rides.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { RidesModule } from './modules/rides/rides.module';
+import { CatalogModule } from './modules/catalog/catalog.module';
+import { FoodModule } from './modules/food/food.module';
+import { GroceriesModule } from './modules/groceries/groceries.module';
+import { CourierModule } from './modules/courier/courier.module';
+import { HomeServicesModule } from './modules/home-services/home-services.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { WhiteLabelModule } from './modules/white-label/white-label.module';
+import { AppGeneratorModule } from './modules/app-generator/app-generator.module';
 import { DatabaseModule } from './database/database.module';
 import { HealthController } from './health.controller';
 
@@ -41,8 +49,16 @@ import { HealthController } from './health.controller';
     PaymentsModule,
     BillingModule,
     WebhookModule,
-    RidesModule,
     NotificationsModule,
+    RidesModule,
+    CatalogModule,
+    FoodModule,
+    GroceriesModule,
+    CourierModule,
+    HomeServicesModule,
+    AnalyticsModule,
+    WhiteLabelModule,
+    AppGeneratorModule,
     DashboardModule,
   ],
   controllers: [HealthController],

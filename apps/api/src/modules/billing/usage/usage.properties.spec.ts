@@ -96,9 +96,13 @@ describe('Usage Record Idempotency (Property 10)', () => {
         fc.constantFrom('jobs_completed', 'app_builds', 'sms_sent', 'api_calls'),
         // Generate arbitrary quantity (positive integer)
         fc.integer({ min: 1, max: 100000 }),
-        // Generate a period key (date string)
-        fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }).map(
-          (d) => d.toISOString().split('T')[0],
+        // Generate a period key (date string YYYY-MM-DD)
+        fc.integer({ min: 2020, max: 2030 }).chain((year) =>
+          fc.integer({ min: 1, max: 12 }).chain((month) =>
+            fc.integer({ min: 1, max: 28 }).map((day) =>
+              `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+            ),
+          ),
         ),
         // Generate the number of times to push the same usage (simulating retries/redundant pushes)
         fc.integer({ min: 1, max: 10 }),
@@ -156,8 +160,12 @@ describe('Usage Record Idempotency (Property 10)', () => {
         fc.integer({ min: 1, max: 100000 }),
         fc.integer({ min: 1, max: 100000 }),
         // Period key
-        fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }).map(
-          (d) => d.toISOString().split('T')[0],
+        fc.integer({ min: 2020, max: 2030 }).chain((y) =>
+          fc.integer({ min: 1, max: 12 }).chain((m) =>
+            fc.integer({ min: 1, max: 28 }).map((day) =>
+              `${y}-${String(m).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+            ),
+          ),
         ),
         // Subscription item IDs
         fc.uuid(),
@@ -202,8 +210,12 @@ describe('Usage Record Idempotency (Property 10)', () => {
         // Quantity
         fc.integer({ min: 1, max: 100000 }),
         // Period key
-        fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }).map(
-          (d) => d.toISOString().split('T')[0],
+        fc.integer({ min: 2020, max: 2030 }).chain((y) =>
+          fc.integer({ min: 1, max: 12 }).chain((m) =>
+            fc.integer({ min: 1, max: 28 }).map((day) =>
+              `${y}-${String(m).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+            ),
+          ),
         ),
         // Number of failures before success (0 to 2, since maxRetries is 3)
         fc.integer({ min: 0, max: 2 }),

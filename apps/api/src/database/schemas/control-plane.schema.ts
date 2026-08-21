@@ -245,3 +245,172 @@ export const platformAuditLog = pgTable('platform_audit_log', {
   details: jsonb('details').$type<Record<string, unknown>>(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// --- WHITE-LABEL & THEMING ---
+
+export const assetTypeEnum = pgEnum('asset_type', [
+  'logo',
+  'splash',
+  'icon',
+  'hero',
+  'guideline',
+  'app_icon',
+  'favicon',
+]);
+
+export const tenantThemes = pgTable('tenant_themes', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  tokens: jsonb('tokens').$type<Record<string, unknown>>().notNull(),
+  published: boolean('published').default(false).notNull(),
+  version: integer('version').notNull().default(1),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const tenantAssets = pgTable('tenant_assets', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  type: assetTypeEnum('type').notNull(),
+  url: text('url').notNull(),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// --- APP GENERATOR ---
+
+export const appSurfaceEnum = pgEnum('app_surface', ['customer', 'provider']);
+export const appEnvironmentEnum = pgEnum('app_environment', ['production', 'preview', 'demo']);
+export const credentialModeEnum = pgEnum('credential_mode', ['platform_managed', 'tenant_owned']);
+export const keyTypeEnum = pgEnum('key_type', [
+  'google_maps',
+  'firebase',
+  'psp_publishable',
+  'sentry',
+  'mapbox',
+]);
+export const moderationStatusEnum = pgEnum('moderation_status', ['pending', 'approved', 'flagged', 'rejected']);
+export const smokeStatusEnum = pgEnum('smoke_status', ['pending', 'running', 'passed', 'failed']);
+export const storeStatusEnum = pgEnum('store_status', [
+  'not_submitted',
+  'submitted',
+  'in_review',
+  'approved',
+  'rejected',
+]);
+
+export const appProjects = pgTable('app_projects', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  surface: appSurfaceEnum('surface').notNull(),
+  platform: appBuildPlatformEnum('platform').notNull(),
+  bundleId: varchar('bundle_id', { length: 255 }).notNull(),
+  easProjectId: varchar('eas_project_id', { length: 255 }),
+  credentialMode: credentialModeEnum('credential_mode').notNull().default('platform_managed'),
+  storeListingState: jsonb('store_listing_state').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const tenantEndpoints = pgTable('tenant_endpoints', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  environment: appEnvironmentEnum('environment').notNull(),
+  endpointDocument: jsonb('endpoint_document').$type<{
+    apiBaseUrl: string;
+    realtimeUrl: string;
+    assetsBaseUrl: string;
+    configUrl: string;
+  }>().notNull(),
+  domainState: varchar('domain_state', { length: 50 }),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const appKeyGrants = pgTable('app_key_grants', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  appProjectId: uuid('app_project_id')
+    .references(() => appProjects.id),
+  keyType: keyTypeEnum('key_type').notNull(),
+  environment: appEnvironmentEnum('environment').notNull(),
+  vendorRef: varchar('vendor_ref', { length: 255 }),
+  restrictionState: varchar('restriction_state', { length: 50 }),
+  encryptedValue: text('encrypted_value'),
+  rotatedAt: timestamp('rotated_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const buildManifests = pgTable('build_manifests', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  surface: appSurfaceEnum('surface').notNull(),
+  version: integer('version').notNull(),
+  manifest: jsonb('manifest').$type<Record<string, unknown>>().notNull(),
+  assetPackHash: varchar('asset_pack_hash', { length: 64 }),
+  codebaseSha: varchar('codebase_sha', { length: 40 }),
+  createdBy: uuid('created_by'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const assetRecords = pgTable('asset_records', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  kind: varchar('kind', { length: 50 }).notNull(), // logo, icon, splash, notification_icon, onboarding, sound
+  surfaceVariant: varchar('surface_variant', { length: 20 }).notNull().default('shared'), // shared, customer, provider
+  originalUrl: text('original_url').notNull(),
+  originalHash: varchar('original_hash', { length: 64 }).notNull(),
+  packHash: varchar('pack_hash', { length: 64 }),
+  moderationStatus: moderationStatusEnum('moderation_status').notNull().default('pending'),
+  rightsDeclaration: boolean('rights_declaration').default(false),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const demoSessions = pgTable('demo_sessions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  tenantId: uuid('tenant_id')
+    .notNull()
+    .references(() => tenants.id),
+  surface: appSurfaceEnum('surface').notNull(),
+  cohortId: uuid('cohort_id'), // links paired customer+provider demos
+  manifestDraftVersion: integer('manifest_draft_version'),
+  channel: varchar('channel', { length: 255 }),
+  easUpdateId: varchar('eas_update_id', { length: 255 }),
+  createdBy: uuid('created_by'),
+  expiresAt: timestamp('expires_at').notNull(),
+  revokedAt: timestamp('revoked_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const soundLibrary = pgTable('sound_library', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  eventType: varchar('event_type', { length: 100 }).notNull(), // order_status, driver_arrived, payment_success, job_offer, job_cancelled, payout_confirmed
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  fileUrl: text('file_url').notNull(),
+  durationSeconds: decimal('duration_seconds', { precision: 5, scale: 1 }),
+  licenseRef: varchar('license_ref', { length: 255 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const updatePublishes = pgTable('update_publishes', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  channel: varchar('channel', { length: 255 }).notNull(),
+  easUpdateId: varchar('eas_update_id', { length: 255 }),
+  codebaseSha: varchar('codebase_sha', { length: 40 }),
+  rolloutStage: integer('rollout_stage').notNull().default(100), // 5, 50, 100
+  publishedBy: uuid('published_by'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});

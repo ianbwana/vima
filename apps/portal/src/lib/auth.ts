@@ -9,6 +9,8 @@
  * transparently calls /auth/refresh using the refresh token cookie.
  */
 
+import { setTokens } from './api-client';
+
 // Cookie name for the refresh token (httpOnly, sameSite=strict)
 export const REFRESH_TOKEN_COOKIE = 'vima_refresh_token';
 
@@ -41,6 +43,71 @@ export type PortalRole = (typeof PORTAL_ALLOWED_ROLES)[number];
 
 export function isPortalRole(role: string): role is PortalRole {
   return PORTAL_ALLOWED_ROLES.includes(role as PortalRole);
+}
+
+/**
+ * Custom error class for auth failures.
+ */
+export class AuthError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'AuthError';
+  }
+}
+
+/**
+ * Sign in with email and password.
+ * Calls the API login endpoint, stores tokens, and sets session cookie.
+ */
+export async function signIn(email: string, password: string): Promise<void> {
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Tenant-Id': getTenantId(),
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new AuthError(body.message || 'Invalid email or password.');
+  }
+
+  const data: AuthTokens = await res.json();
+
+  // Store tokens in memory for API client
+  setTokens(data);
+
+  // Set session cookie for middleware (lightweight flag, not the actual token)
+  document.cookie = `${SESSION_COOKIE}=1; path=/; max-age=${7 * 24 * 60 * 60}; samesite=strict`;
+}
+
+/**
+ * Get the tenant ID for the current context.
+ * In production this would be resolved from the subdomain.
+ * For local development, uses a default demo tenant.
+ */
+function getTenantId(): string {
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    // If running on a subdomain (e.g., demo.vima.app), extract slug
+    if (host.includes('.') && !host.startsWith('localhost')) {
+      // Would resolve via API in production
+    }
+  }
+  // Default demo tenant for local development
+  return 'demo';
+}
+
+/**
+ * Sign out — clear tokens and session cookie.
+ */
+export async function signOut(): Promise<void> {
+  document.cookie = `${SESSION_COOKIE}=; path=/; max-age=0`;
+  // Clear in-memory tokens (import dynamically to avoid circular)
+  const { clearTokens } = await import('./api-client');
+  clearTokens();
 }
 
 /**

@@ -17,7 +17,7 @@ export class StripeAdapter implements PspAdapter {
   private readonly webhookSecret: string;
 
   constructor(secretKey: string, webhookSecret: string) {
-    this.stripe = new Stripe(secretKey, { apiVersion: '2025-02-24.acacia' });
+    this.stripe = new Stripe(secretKey, { apiVersion: '2025-02-24.acacia' as any });
     this.webhookSecret = webhookSecret;
   }
 
