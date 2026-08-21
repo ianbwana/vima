@@ -9,6 +9,7 @@ import { BillingModule } from './modules/billing/billing.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { WebhookModule } from './modules/webhook/webhook.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 import { RidesModule } from './modules/rides/rides.module';
 import { CatalogModule } from './modules/catalog/catalog.module';
 import { FoodModule } from './modules/food/food.module';
@@ -45,6 +46,7 @@ import { HealthController } from './health.controller';
     PaymentsModule,
     BillingModule,
     WebhookModule,
+    NotificationsModule,
     RidesModule,
     CatalogModule,
     FoodModule,
