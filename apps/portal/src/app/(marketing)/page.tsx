@@ -3,12 +3,12 @@
 import Link from 'next/link';
 
 const SERVICES = [
-  { name: 'Ride hailing', desc: 'Fare estimates, live tracking, and sequential driver dispatch, ready on day one.', icon: '🚗' },
-  { name: 'Food delivery', desc: 'Menus, modifiers, and order tracking from cart to doorstep.', icon: '🍔' },
-  { name: 'Groceries', desc: 'Large catalogs, substitution flows, and scheduled delivery slots.', icon: '🛒' },
-  { name: 'Courier & parcel', desc: 'On-demand sending with photo proof of delivery and cash-on-delivery.', icon: '📦' },
-  { name: 'Home services', desc: 'Bookings, provider calendars, and quote flows for non-standard jobs.', icon: '🔧' },
-  { name: 'Payments & wallet', desc: 'One PSP abstraction, a double-entry ledger, and payouts in every region you launch.', icon: '💳' },
+  { name: 'Ride hailing', desc: 'Fare estimates, live tracking, and sequential driver dispatch, ready on day one.', icon: '🚗', image: 'https://images.unsplash.com/photo-1449965408869-ebd3fee4f2ed?w=400&h=250&fit=crop' },
+  { name: 'Food delivery', desc: 'Menus, modifiers, and order tracking from cart to doorstep.', icon: '🍔', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop' },
+  { name: 'Groceries', desc: 'Large catalogs, substitution flows, and scheduled delivery slots.', icon: '🛒', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=250&fit=crop' },
+  { name: 'Courier & parcel', desc: 'On-demand sending with photo proof of delivery and cash-on-delivery.', icon: '📦', image: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=250&fit=crop' },
+  { name: 'Home services', desc: 'Bookings, provider calendars, and quote flows for non-standard jobs.', icon: '🔧', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=250&fit=crop' },
+  { name: 'Payments & wallet', desc: 'One PSP abstraction, a double-entry ledger, and payouts in every region you launch.', icon: '💳', image: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=250&fit=crop' },
 ];
 
 const STEPS = [
@@ -104,10 +104,12 @@ export default function LandingPage() {
         </p>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map((s) => (
-            <div key={s.name} className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg hover:shadow-gray-100 transition-all">
-              <span className="text-3xl">{s.icon}</span>
-              <h3 className="mt-4 text-lg font-bold">{s.name}</h3>
-              <p className="mt-2 text-sm text-gray-600 leading-relaxed">{s.desc}</p>
+            <div key={s.name} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:shadow-gray-100 transition-all">
+              <img src={s.image} alt={s.name} className="w-full h-36 object-cover" />
+              <div className="p-6">
+                <h3 className="text-lg font-bold">{s.name}</h3>
+                <p className="mt-2 text-sm text-gray-600 leading-relaxed">{s.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -133,8 +135,19 @@ export default function LandingPage() {
       {/* Your Brand */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="bg-gray-100 rounded-2xl aspect-[4/3] flex items-center justify-center text-gray-400 text-sm">
-            [Themed app screenshots — customer, driver, portal]
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
+            <img
+              src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop"
+              alt="Mobile app on phone showing ride-hailing interface"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                <p className="text-xs font-medium text-gray-500">Tenant: Acme Rides</p>
+                <p className="text-sm font-bold text-gray-900 mt-1">Fully branded — your colors, your domain, your app</p>
+              </div>
+            </div>
           </div>
           <div>
             <h2 className="text-3xl md:text-4xl font-bold">Your brand, not ours.</h2>
