@@ -75,6 +75,7 @@ export const tenants = pgTable('tenants', {
   enabledModules: jsonb('enabled_modules').$type<string[]>().default([]),
   theme: jsonb('theme').$type<Record<string, unknown>>(),
   databaseName: varchar('database_name', { length: 255 }),
+  trialEndsAt: timestamp('trial_ends_at'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

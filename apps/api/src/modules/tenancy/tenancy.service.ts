@@ -27,7 +27,8 @@ export class TenancyService {
       throw new ConflictException(`Tenant slug "${dto.slug}" is already taken`);
     }
 
-    // Insert tenant
+    // Insert tenant with 14-day trial
+    const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
     const [tenant] = await db
       .insert(schema.tenants)
       .values({
@@ -36,6 +37,7 @@ export class TenancyService {
         status: 'pending_verification',
         tier: dto.tier || 'starter',
         enabledModules: dto.enabledModules || [],
+        trialEndsAt,
       })
       .returning();
 

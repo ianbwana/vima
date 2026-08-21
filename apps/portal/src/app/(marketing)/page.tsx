@@ -52,7 +52,7 @@ export default function LandingPage() {
               Book a demo
             </Link>
             <Link href="/signup" className="text-sm bg-[#1A1A1A] text-white px-4 py-2 rounded-full hover:bg-[#333] transition-colors">
-              Start free
+              Try for free
             </Link>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function LandingPage() {
         </p>
         <div className="mt-8 flex items-center gap-4">
           <Link href="/signup" className="inline-flex items-center px-6 py-3 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors shadow-lg shadow-[#E91E63]/20">
-            Start free
+            Try for free
           </Link>
           <Link href="/login" className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-gray-700 hover:border-gray-500 transition-colors">
             Book a demo
@@ -193,6 +193,7 @@ export default function LandingPage() {
       <section id="pricing" className="max-w-6xl mx-auto px-6 py-20">
         <h2 className="text-3xl md:text-4xl font-bold text-center">Pick a tier, not a project.</h2>
         <p className="mt-4 text-gray-600 text-center">Start on a subdomain. Move to your own domain and native apps when you're ready.</p>
+        <p className="mt-3 text-center"><span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">✓ 14-day free trial on all plans</span></p>
 
         {/* Tier Cards */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -207,7 +208,7 @@ export default function LandingPage() {
               <li className="flex items-center gap-2 text-gray-400"><span>—</span> No dedicated app factory</li>
             </ul>
             <Link href="/signup" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 border border-gray-300 rounded-full text-sm font-medium hover:border-gray-500 transition-colors">
-              Start free
+              Try for free
             </Link>
           </div>
 
@@ -223,7 +224,7 @@ export default function LandingPage() {
               <li className="flex items-center gap-2 text-gray-400"><span>—</span> No dedicated app factory</li>
             </ul>
             <Link href="/signup" className="mt-6 w-full inline-flex justify-center items-center px-4 py-2.5 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors">
-              Start free
+              Try for free
             </Link>
           </div>
 
@@ -264,6 +265,7 @@ export default function LandingPage() {
           </div>
 
           <p className="mt-6 text-xs text-gray-400">Plus usage-based fees per completed job and per app build. Payments & wallet is included in the platform core.</p>
+          <p className="mt-3 text-sm font-medium text-[#E91E63]">All plans include a 14-day free trial. No credit card required.</p>
         </div>
       </section>
 
@@ -274,7 +276,7 @@ export default function LandingPage() {
           <p className="mt-4 text-gray-400">Sign up and provision your tenant in minutes.</p>
           <div className="mt-8 flex items-center justify-center gap-4">
             <Link href="/signup" className="px-6 py-3 bg-[#E91E63] text-white rounded-full text-sm font-medium hover:bg-[#C2185B] transition-colors shadow-lg shadow-[#E91E63]/20">
-              Start free
+              Try for free
             </Link>
             <Link href="/login" className="px-6 py-3 border border-gray-600 text-white rounded-full text-sm font-medium hover:border-gray-400 transition-colors">
               Book a demo
