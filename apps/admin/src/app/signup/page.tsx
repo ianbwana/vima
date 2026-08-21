@@ -5,17 +5,17 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const MODULES = [
-  { key: 'rides', name: 'Ride Hailing', description: 'On-demand passenger transport', icon: '🚗' },
-  { key: 'food', name: 'Food Delivery', description: 'Restaurant food delivery', icon: '🍔' },
-  { key: 'groceries', name: 'Groceries', description: 'Grocery shopping & delivery', icon: '🛒' },
-  { key: 'courier', name: 'Courier', description: 'Package delivery services', icon: '📦' },
-  { key: 'home_services', name: 'Home Services', description: 'Home maintenance & repair', icon: '🔧' },
+  { key: 'rides', name: 'Ride Hailing', description: 'On-demand passenger transport', icon: '🚗', monthlyFee: 79 },
+  { key: 'food', name: 'Food Delivery', description: 'Restaurant food delivery', icon: '🍔', monthlyFee: 99 },
+  { key: 'groceries', name: 'Groceries', description: 'Grocery shopping & delivery', icon: '🛒', monthlyFee: 99 },
+  { key: 'courier', name: 'Courier', description: 'Package delivery services', icon: '📦', monthlyFee: 69 },
+  { key: 'home_services', name: 'Home Services', description: 'Home maintenance & repair', icon: '🔧', monthlyFee: 89 },
 ];
 
 const TIERS = [
-  { value: 'starter', name: 'Starter', price: '$99/mo', description: 'Branded PWA, subdomain only', features: ['Branded PWA', 'Up to 2 modules', 'Subdomain'] },
-  { value: 'growth', name: 'Growth', price: '$299/mo', description: 'Custom domain, all modules', features: ['Custom domain', 'All modules', 'Priority support'] },
-  { value: 'scale', name: 'Scale', price: '$799/mo', description: 'Native apps, white-label', features: ['Native iOS & Android apps', 'White-label branding', 'App Factory', 'Dedicated provider app'] },
+  { value: 'starter', name: 'Starter', price: '$49', baseFee: 49, description: 'Branded PWA, subdomain only', features: ['Branded PWA', 'Up to 3 modules', 'Subdomain', 'Basic dashboard'] },
+  { value: 'growth', name: 'Growth', price: '$149', baseFee: 149, description: 'Custom domain, all modules', features: ['Custom domain', 'All modules available', 'Priority support', 'Advanced analytics'] },
+  { value: 'scale', name: 'Scale', price: '$399', baseFee: 399, description: 'Native apps, white-label', features: ['Native iOS & Android apps', 'White-label branding', 'App Factory', 'Provider app', 'Account manager'] },
 ];
 
 export default function SignupPage() {
@@ -158,8 +158,9 @@ export default function SignupPage() {
                 }`}
               >
                 <p className="text-sm font-heading text-text-primary">{tier.name}</p>
-                <p className="text-lg font-heading text-accent mt-1">{tier.price}</p>
+                <p className="text-lg font-heading text-accent mt-1">{tier.price}/mo base</p>
                 <p className="text-xs text-text-muted mt-2">{tier.description}</p>
+                <p className="text-xs text-text-secondary mt-1">+ module fees per service</p>
                 <ul className="mt-3 space-y-1">
                   {tier.features.map((f) => (
                     <li key={f} className="text-xs text-text-secondary flex items-center gap-1.5">
@@ -183,34 +184,57 @@ export default function SignupPage() {
       {step === 'modules' && (
         <div className="mt-6 space-y-4">
           <h2 className="text-lg font-heading text-text-primary">Select Services</h2>
-          <p className="text-sm text-text-muted">Choose which services to enable for this tenant.</p>
+          <p className="text-sm text-text-muted">Each service has a monthly fee. Your total = platform fee + module fees.</p>
+
+          {/* Running total */}
+          <div className="p-4 bg-background-surface rounded-card border border-accent/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-text-muted">Monthly Total</p>
+                <p className="text-2xl font-heading text-accent">
+                  ${(TIERS.find((t) => t.value === form.tier) as any)?.baseFee + form.enabledModules.reduce((sum, key) => sum + (MODULES.find((m) => m.key === key)?.monthlyFee || 0), 0)}/mo
+                </p>
+              </div>
+              <div className="text-right text-xs text-text-muted">
+                <p>Platform: ${(TIERS.find((t) => t.value === form.tier) as any)?.baseFee}/mo</p>
+                <p>Modules: ${form.enabledModules.reduce((sum, key) => sum + (MODULES.find((m) => m.key === key)?.monthlyFee || 0), 0)}/mo</p>
+              </div>
+            </div>
+          </div>
+
           <div className="space-y-3">
             {MODULES.map((mod) => (
               <label
                 key={mod.key}
-                className={`flex items-center gap-4 p-4 rounded-card border cursor-pointer transition-all ${
+                className={`flex items-center justify-between p-4 rounded-card border cursor-pointer transition-all ${
                   form.enabledModules.includes(mod.key)
                     ? 'border-accent bg-accent-muted'
                     : 'border-border bg-background-surface hover:border-accent/50'
                 }`}
               >
-                <input
-                  type="checkbox"
-                  checked={form.enabledModules.includes(mod.key)}
-                  onChange={(e) => {
-                    setForm({
-                      ...form,
-                      enabledModules: e.target.checked
-                        ? [...form.enabledModules, mod.key]
-                        : form.enabledModules.filter((m) => m !== mod.key),
-                    });
-                  }}
-                  className="rounded"
-                />
-                <span className="text-2xl">{mod.icon}</span>
-                <div>
-                  <p className="text-sm font-medium text-text-primary">{mod.name}</p>
-                  <p className="text-xs text-text-muted">{mod.description}</p>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="checkbox"
+                    checked={form.enabledModules.includes(mod.key)}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        enabledModules: e.target.checked
+                          ? [...form.enabledModules, mod.key]
+                          : form.enabledModules.filter((m) => m !== mod.key),
+                      });
+                    }}
+                    className="rounded"
+                  />
+                  <span className="text-2xl">{mod.icon}</span>
+                  <div>
+                    <p className="text-sm font-medium text-text-primary">{mod.name}</p>
+                    <p className="text-xs text-text-muted">{mod.description}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-heading text-accent">+${mod.monthlyFee}</p>
+                  <p className="text-xs text-text-muted">/month</p>
                 </div>
               </label>
             ))}
@@ -243,7 +267,7 @@ export default function SignupPage() {
             </div>
             <div className="flex justify-between py-2 border-b border-border">
               <span className="text-text-muted">Plan</span>
-              <span className="text-accent font-medium capitalize">{form.tier}</span>
+              <span className="text-accent font-medium capitalize">{form.tier} (${(TIERS.find((t) => t.value === form.tier) as any)?.baseFee}/mo base)</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
               <span className="text-text-muted">Admin Email</span>
@@ -252,12 +276,21 @@ export default function SignupPage() {
             <div className="py-2">
               <span className="text-text-muted">Services</span>
               <div className="mt-2 flex flex-wrap gap-2">
-                {form.enabledModules.map((mod) => (
-                  <span key={mod} className="text-xs px-2 py-1 rounded-full bg-accent-muted text-accent capitalize">
-                    {mod.replace('_', ' ')}
-                  </span>
-                ))}
+                {form.enabledModules.map((mod) => {
+                  const modInfo = MODULES.find((m) => m.key === mod);
+                  return (
+                    <span key={mod} className="text-xs px-2 py-1 rounded-full bg-accent-muted text-accent capitalize">
+                      {mod.replace('_', ' ')} (+${modInfo?.monthlyFee}/mo)
+                    </span>
+                  );
+                })}
               </div>
+            </div>
+            <div className="flex justify-between py-3 mt-2 border-t border-accent/30">
+              <span className="text-text-primary font-medium">Total Monthly Cost</span>
+              <span className="text-accent text-lg font-heading">
+                ${(TIERS.find((t) => t.value === form.tier) as any)?.baseFee + form.enabledModules.reduce((sum, key) => sum + (MODULES.find((m) => m.key === key)?.monthlyFee || 0), 0)}/mo
+              </span>
             </div>
           </div>
           <div className="flex gap-3">

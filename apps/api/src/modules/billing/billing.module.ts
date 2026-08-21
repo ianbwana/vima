@@ -6,6 +6,7 @@ import { SubscriptionController } from './subscription/subscription.controller';
 import { UsageService } from './usage/usage.service';
 import { UsagePushProcessor } from './usage/usage-push.processor';
 import { UsageController } from './usage/usage.controller';
+import { PricingController } from './pricing.controller';
 import { ModuleEntitlementListener } from './listeners/module-entitlement.listener';
 
 @Module({
@@ -14,7 +15,7 @@ import { ModuleEntitlementListener } from './listeners/module-entitlement.listen
       name: 'usage-push',
     }),
   ],
-  controllers: [SubscriptionController, UsageController],
+  controllers: [SubscriptionController, UsageController, PricingController],
   providers: [
     StripeBillingClient,
     SubscriptionService,
