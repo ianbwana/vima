@@ -574,3 +574,152 @@ export const deliveryFeeConfig = pgTable('delivery_fee_config', {
   currency: varchar('currency', { length: 3 }).notNull().default('USD'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// --- COURIER / PARCEL ---
+
+export const packageCategoryEnum = pgEnum('package_category', ['document', 'small', 'medium', 'large']);
+
+export const parcelStatusEnum = pgEnum('parcel_status', [
+  'pending',
+  'picked_up',
+  'in_transit',
+  'delivered',
+  'cancelled',
+]);
+
+export const parcels = pgTable('parcels', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  jobId: uuid('job_id').references(() => jobs.id),
+  senderId: uuid('sender_id')
+    .notNull()
+    .references(() => users.id),
+  providerId: uuid('provider_id').references(() => providers.id),
+  recipientName: varchar('recipient_name', { length: 255 }).notNull(),
+  recipientPhone: varchar('recipient_phone', { length: 50 }).notNull(),
+  packageCategory: packageCategoryEnum('package_category').notNull(),
+  weightKg: decimal('weight_kg', { precision: 6, scale: 2 }),
+  description: text('description'),
+  specialInstructions: text('special_instructions'),
+  pickupAddress: text('pickup_address').notNull(),
+  pickupLat: decimal('pickup_lat', { precision: 10, scale: 7 }).notNull(),
+  pickupLng: decimal('pickup_lng', { precision: 10, scale: 7 }).notNull(),
+  dropoffAddress: text('dropoff_address').notNull(),
+  dropoffLat: decimal('dropoff_lat', { precision: 10, scale: 7 }).notNull(),
+  dropoffLng: decimal('dropoff_lng', { precision: 10, scale: 7 }).notNull(),
+  estimatedFee: decimal('estimated_fee', { precision: 10, scale: 2 }),
+  actualFee: decimal('actual_fee', { precision: 10, scale: 2 }),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  codAmount: decimal('cod_amount', { precision: 10, scale: 2 }),
+  codCollected: boolean('cod_collected').default(false).notNull(),
+  proofPhotoUrl: text('proof_photo_url'),
+  proofOtpVerified: boolean('proof_otp_verified').default(false).notNull(),
+  status: parcelStatusEnum('status').notNull().default('pending'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  pickedUpAt: timestamp('picked_up_at'),
+  deliveredAt: timestamp('delivered_at'),
+});
+
+// --- HOME SERVICES ---
+
+export const priceCardTypeEnum = pgEnum('price_card_type', ['fixed', 'hourly', 'quote']);
+
+export const bookingStatusEnum = pgEnum('booking_status', [
+  'pending',
+  'confirmed',
+  'provider_en_route',
+  'in_progress',
+  'completed',
+  'cancelled',
+]);
+
+export const quoteStatusEnum = pgEnum('quote_status', ['pending', 'accepted', 'rejected', 'expired']);
+
+export const serviceCategories = pgTable('service_categories', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  parentId: uuid('parent_id'),
+  name: varchar('name', { length: 255 }).notNull(),
+  iconUrl: text('icon_url'),
+  sortOrder: integer('sort_order').notNull().default(0),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const servicePriceCards = pgTable('service_price_cards', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  categoryId: uuid('category_id')
+    .notNull()
+    .references(() => serviceCategories.id),
+  name: varchar('name', { length: 255 }).notNull(),
+  type: priceCardTypeEnum('type').notNull(),
+  price: decimal('price', { precision: 10, scale: 2 }),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  minDurationHours: decimal('min_duration_hours', { precision: 4, scale: 1 }),
+  description: text('description'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const providerQualifications = pgTable('provider_qualifications', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  providerId: uuid('provider_id')
+    .notNull()
+    .references(() => providers.id),
+  categoryId: uuid('category_id')
+    .notNull()
+    .references(() => serviceCategories.id),
+  verified: boolean('verified').default(false).notNull(),
+  documents: jsonb('documents').$type<Array<{ type: string; url: string }>>(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const providerAvailability = pgTable('provider_availability', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  providerId: uuid('provider_id')
+    .notNull()
+    .references(() => providers.id),
+  dayOfWeek: integer('day_of_week').notNull(), // 0-6
+  startTime: varchar('start_time', { length: 5 }).notNull(), // HH:MM
+  endTime: varchar('end_time', { length: 5 }).notNull(),
+  active: boolean('active').default(true).notNull(),
+});
+
+export const bookings = pgTable('bookings', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  customerId: uuid('customer_id')
+    .notNull()
+    .references(() => users.id),
+  providerId: uuid('provider_id').references(() => providers.id),
+  categoryId: uuid('category_id')
+    .notNull()
+    .references(() => serviceCategories.id),
+  priceCardId: uuid('price_card_id').references(() => servicePriceCards.id),
+  scheduledDate: varchar('scheduled_date', { length: 10 }).notNull(), // YYYY-MM-DD
+  scheduledTime: varchar('scheduled_time', { length: 5 }).notNull(), // HH:MM
+  durationHours: decimal('duration_hours', { precision: 4, scale: 1 }),
+  address: text('address'),
+  locationLat: decimal('location_lat', { precision: 10, scale: 7 }),
+  locationLng: decimal('location_lng', { precision: 10, scale: 7 }),
+  quotedPrice: decimal('quoted_price', { precision: 10, scale: 2 }),
+  finalPrice: decimal('final_price', { precision: 10, scale: 2 }),
+  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  status: bookingStatusEnum('status').notNull().default('pending'),
+  notes: text('notes'),
+  completionPhotos: jsonb('completion_photos').$type<string[]>(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  confirmedAt: timestamp('confirmed_at'),
+  completedAt: timestamp('completed_at'),
+});
+
+export const bookingQuotes = pgTable('booking_quotes', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  bookingId: uuid('booking_id')
+    .notNull()
+    .references(() => bookings.id),
+  providerId: uuid('provider_id')
+    .notNull()
+    .references(() => providers.id),
+  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
+  description: text('description'),
+  validUntil: timestamp('valid_until'),
+  status: quoteStatusEnum('status').notNull().default('pending'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
