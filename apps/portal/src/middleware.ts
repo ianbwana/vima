@@ -8,13 +8,13 @@ import type { NextRequest } from 'next/server';
  */
 
 // Routes that do not require authentication
-const PUBLIC_ROUTES = ['/login'];
+const PUBLIC_ROUTES = ['/login', '/', '/signup'];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip auth check for public routes
-  if (PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
+  if (pathname === '/' || PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
     return NextResponse.next();
   }
 
