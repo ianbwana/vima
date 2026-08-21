@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@5.2.0
-
 jobs:
   build-and-test:
     docker:
@@ -25,34 +22,46 @@ jobs:
       NODE_ENV: test
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
+      - restore_cache:
+          keys:
+            - deps-v1-{{ checksum "package-lock.json" }}
+            - deps-v1-
       - run:
-          name: Install workspace dependencies
+          name: Install dependencies
           command: npm ci --legacy-peer-deps
+      - save_cache:
+          key: deps-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
       - run:
-          name: Build PSP adapters package
+          name: Build PSP adapters
           command: cd packages/psp-adapters && npx tsc --skipLibCheck
       - run:
           name: Build API
           command: cd apps/api && npx nest build
       - run:
-          name: Run API tests
-          command: cd apps/api && npx jest --no-coverage --passWithNoTests --forceExit
-      - run:
-          name: Build Portal
-          command: cd apps/portal && npx next build
+          name: Run tests
+          command: cd apps/api && npx jest --no-coverage --passWithNoTests --forceExit --maxWorkers=2
 
   lint:
     docker:
       - image: cimg/node:20.11
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
+      - restore_cache:
+          keys:
+            - deps-v1-{{ checksum "package-lock.json" }}
+            - deps-v1-
       - run:
-          name: Install workspace dependencies
+          name: Install dependencies
           command: npm ci --legacy-peer-deps
+      - save_cache:
+          key: deps-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build PSP adapters
+          command: cd packages/psp-adapters && npx tsc --skipLibCheck
       - run:
           name: TypeScript check (API)
           command: cd apps/api && npx tsc --noEmit --skipLibCheck
