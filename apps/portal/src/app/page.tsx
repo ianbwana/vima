@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
+import LandingPage from './(marketing)/page';
 
 export default function Home() {
-  redirect('/overview');
+  return <LandingPage />;
 }
