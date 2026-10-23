@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { EntitlementsService } from './entitlements.service';
 import { JwtAuthGuard } from '../identity/guards/jwt-auth.guard';
+import { PlatformAdminGuard } from '../billing/guards/platform-admin.guard';
+import { Roles } from '../billing/guards/roles.decorator';
 import { TenantId } from '../tenancy/decorators/tenant.decorator';
 import { UpdateModulesDto } from './dto/update-modules.dto';
 import { TenancyService } from '../tenancy/tenancy.service';
@@ -21,8 +23,11 @@ export class EntitlementsController {
     return this.entitlementsService.getEntitlements(tenantId);
   }
 
+  // Changing modules alters the tenant's bill, so only tenant owners/admins and
+  // platform admins may do it. Cross-tenant access is blocked by JwtStrategy.
   @Post('modules')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PlatformAdminGuard)
+  @Roles('owner', 'admin', 'platform_admin')
   async updateModules(@TenantId() tenantId: string, @Body() dto: UpdateModulesDto) {
     // Get current entitlements to determine which modules changed
     const currentEntitlements = await this.entitlementsService.getEntitlements(tenantId);
