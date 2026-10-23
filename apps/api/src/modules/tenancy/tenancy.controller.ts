@@ -1,6 +1,8 @@
-import { Controller, Post, Get, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { TenancyService } from './tenancy.service';
 import { CreateTenantDto } from './dto/create-tenant.dto';
+import { JwtAuthGuard } from '../identity/guards/jwt-auth.guard';
+import { PlatformAdminGuard } from '../billing/guards/platform-admin.guard';
 
 @Controller('tenants')
 export class TenancyController {
@@ -20,11 +22,13 @@ export class TenancyController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, PlatformAdminGuard)
   async list() {
     return this.tenancyService.listTenants();
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard, PlatformAdminGuard)
   async getById(@Param('id') id: string) {
     const tenant = await this.tenancyService.findById(id);
     if (!tenant) {

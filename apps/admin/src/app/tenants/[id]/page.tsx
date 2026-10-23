@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { adminFetch, getAdminToken, isAdminAuthenticated } from '../../../lib/admin-auth';
 
 interface Tenant {
   id: string;
@@ -18,23 +19,25 @@ const ALL_MODULES = ['rides', 'food', 'groceries', 'courier', 'home_services'];
 
 export default function TenantDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const tenantId = params.id as string;
   const [tenant, setTenant] = useState<Tenant | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
+    if (!isAdminAuthenticated()) {
+      router.replace('/login');
+      return;
+    }
     fetchTenant();
-  }, [tenantId]);
+  }, [tenantId, router]);
 
   async function fetchTenant() {
     setLoading(true);
     try {
-      const res = await fetch(`/api/tenants/${tenantId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setTenant(data);
-      }
+      const data = await adminFetch<Tenant>(`/tenants/${tenantId}`);
+      setTenant(data);
     } catch {}
     setLoading(false);
   }
@@ -47,9 +50,15 @@ export default function TenantDetailPage() {
         ? [...(tenant.enabledModules || []), module]
         : (tenant.enabledModules || []).filter((m) => m !== module);
 
+      // Entitlement changes are tenant-scoped: send the tenant id header so the
+      // API resolves the correct tenant, plus the platform-admin bearer token.
       const res = await fetch(`/api/entitlements/modules`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Tenant-Id': tenantId },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Tenant-Id': tenantId,
+          ...(getAdminToken() ? { Authorization: `Bearer ${getAdminToken()}` } : {}),
+        },
         body: JSON.stringify({ modules: newModules }),
       });
 

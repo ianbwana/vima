@@ -19,6 +19,8 @@ import { HomeServicesModule } from './modules/home-services/home-services.module
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { WhiteLabelModule } from './modules/white-label/white-label.module';
 import { AppGeneratorModule } from './modules/app-generator/app-generator.module';
+import { PlatformAdminModule } from './modules/platform-admin/platform-admin.module';
+import { ProvidersModule } from './modules/providers/providers.module';
 import { DatabaseModule } from './database/database.module';
 import { HealthController } from './health.controller';
 
@@ -59,6 +61,8 @@ import { HealthController } from './health.controller';
     AnalyticsModule,
     WhiteLabelModule,
     AppGeneratorModule,
+    PlatformAdminModule,
+    ProvidersModule,
     DashboardModule,
   ],
   controllers: [HealthController],

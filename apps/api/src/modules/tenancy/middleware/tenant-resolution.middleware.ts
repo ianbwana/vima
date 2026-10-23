@@ -13,6 +13,14 @@ export class TenantResolutionMiddleware implements NestMiddleware {
 
   async use(req: Request, _res: Response, next: NextFunction) {
     try {
+      // Platform-scoped routes have no single tenant context. The tenants list
+      // is authorized by the JWT platform_admin role at the route guard, so we
+      // let it through without requiring a resolvable tenant here.
+      if (this.isPlatformScopedRoute(req)) {
+        next();
+        return;
+      }
+
       const tenantId = await this.resolveTenant(req);
 
       if (!tenantId) {
@@ -28,6 +36,24 @@ export class TenantResolutionMiddleware implements NestMiddleware {
       console.error('[TenantResolution] Unexpected error:', err);
       throw new HttpException('Tenant could not be resolved', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  /**
+   * Routes that operate across all tenants (platform admin) and therefore must
+   * not require a resolvable tenant. Authorization is enforced by route guards.
+   */
+  private isPlatformScopedRoute(req: Request): boolean {
+    // Tenant management reads (GET /tenants and GET /tenants/:id) are
+    // platform-admin operations authorized by the JWT platform_admin role at
+    // the route guard, so there is no single tenant context to resolve here.
+    if (req.method !== 'GET') return false;
+
+    // Use originalUrl (always the full request path) and strip the query string
+    // and any trailing slash. req.path can be relative depending on how the
+    // middleware is mounted, so originalUrl is the reliable source.
+    const rawPath = (req.originalUrl || req.path || '').split('?')[0];
+    const path = rawPath.replace(/\/+$/, '');
+    return path === '/tenants' || path.startsWith('/tenants/');
   }
 
   private async resolveTenant(req: Request): Promise<string | null> {
