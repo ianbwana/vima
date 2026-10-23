@@ -3,12 +3,14 @@ import { TenancyService } from './tenancy.service';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { JwtAuthGuard } from '../identity/guards/jwt-auth.guard';
 import { PlatformAdminGuard } from '../billing/guards/platform-admin.guard';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Controller('tenants')
 export class TenancyController {
   constructor(private readonly tenancyService: TenancyService) {}
 
   @Post()
+  @UseGuards(ThrottlerGuard)
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateTenantDto) {
     const tenant = await this.tenancyService.createTenant(dto);
@@ -16,6 +18,7 @@ export class TenancyController {
   }
 
   @Post(':id/provision')
+  @UseGuards(JwtAuthGuard, PlatformAdminGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   async provision(@Param('id') id: string) {
     return this.tenancyService.provisionTenant(id);

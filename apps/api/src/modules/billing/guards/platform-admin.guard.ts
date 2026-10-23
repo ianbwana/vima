@@ -25,7 +25,9 @@ export class PlatformAdminGuard implements CanActivate {
 
     if (!user || !roles.includes(user.role)) {
       throw new ForbiddenException(
-        'Access restricted to platform administrators',
+        requiredRoles
+          ? 'Your role does not have access to this resource'
+          : 'Access restricted to platform administrators',
       );
     }
 

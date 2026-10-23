@@ -1,5 +1,6 @@
 import { Module, MiddlewareConsumer, NestModule, RequestMethod } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { TenantResolutionMiddleware } from './middleware/tenant-resolution.middleware';
 import { TenancyService } from './tenancy.service';
 import { TenancyController } from './tenancy.controller';
@@ -10,6 +11,15 @@ import { ProvisioningProcessor } from './provisioning.processor';
     BullModule.registerQueue({
       name: 'provisioning',
     }),
+    // Public signup creates a Postgres database per call, so it is rate
+    // limited per client IP (see @Throttle on TenancyController.create).
+    ThrottlerModule.forRoot([
+      {
+        name: 'signup',
+        ttl: 60 * 60 * 1000,
+        limit: Number(process.env.SIGNUP_RATE_LIMIT_PER_HOUR) || 5,
+      },
+    ]),
   ],
   controllers: [TenancyController],
   providers: [TenancyService, ProvisioningProcessor],

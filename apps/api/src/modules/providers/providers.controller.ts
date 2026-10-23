@@ -2,6 +2,8 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { and, ilike, or, sql, desc } from 'drizzle-orm';
 import { JwtAuthGuard } from '../identity/guards/jwt-auth.guard';
 import { TenantId } from '../tenancy/decorators/tenant.decorator';
+import { PlatformAdminGuard } from '../billing/guards/platform-admin.guard';
+import { Roles } from '../billing/guards/roles.decorator';
 import { TenantDbService } from '../../database/tenant-db.service';
 import * as schema from '../../database/schemas/tenant.schema';
 
@@ -10,10 +12,12 @@ import * as schema from '../../database/schemas/tenant.schema';
  *
  * Tenant admin endpoint for listing service providers (drivers, couriers,
  * delivery agents). Joins the tenant `providers` table with `users` for
- * display fields and returns a paginated, searchable list.
+ * display fields and returns a paginated, searchable list. Exposes provider
+ * names and phone numbers, so it is limited to tenant staff.
  */
 @Controller('providers')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, PlatformAdminGuard)
+@Roles('owner', 'admin', 'ops')
 export class ProvidersController {
   constructor(private readonly tenantDb: TenantDbService) {}
 

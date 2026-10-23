@@ -11,6 +11,8 @@ import {
 import { JwtAuthGuard } from '@/modules/identity/guards/jwt-auth.guard';
 import { TenantId } from '@/modules/tenancy/decorators/tenant.decorator';
 import { UserId } from '@/modules/identity/decorators/user-id.decorator';
+import { PlatformAdminGuard } from '@/modules/billing/guards/platform-admin.guard';
+import { Roles } from '@/modules/billing/guards/roles.decorator';
 import { TenantDbService } from '@/database/tenant-db.service';
 import * as tenantSchema from '@/database/schemas/tenant.schema';
 import { desc, inArray } from 'drizzle-orm';
@@ -30,8 +32,11 @@ export class WalletController {
   /**
    * GET /wallet/transactions?limit=10
    * List recent ledger transactions (newest first) with their entries.
+   * Returns the whole tenant ledger, so it is limited to tenant staff.
    */
   @Get('transactions')
+  @UseGuards(PlatformAdminGuard)
+  @Roles('owner', 'admin', 'finance')
   async listTransactions(
     @TenantId() tenantId: string,
     @Query('limit') limitRaw?: string,

@@ -1,4 +1,10 @@
-import { Injectable, ConflictException, NotFoundException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+  Logger,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { ConfigService } from '@nestjs/config';
 import { Queue } from 'bullmq';
@@ -59,9 +65,39 @@ export class TenancyService {
     // Provision the tenant database synchronously so the caller can immediately
     // register the admin user. Without this the self-service signup flow would
     // fail at POST /auth/register (no tenant DB / tables exist yet).
-    await this.provisionDatabase(tenant.id);
+    try {
+      await this.provisionDatabase(tenant.id);
+    } catch (err) {
+      // Undo the signup so the slug is released and the caller can retry,
+      // instead of leaving a tenant with no database holding it.
+      this.logger.error(`Provisioning failed for tenant ${tenant.id}; rolling back`, err as Error);
+      await this.rollbackTenant(tenant.id);
+      throw new ServiceUnavailableException('Could not set up your platform. Please try again.');
+    }
 
     return tenant;
+  }
+
+  /**
+   * Best-effort removal of a tenant whose provisioning failed: drops its
+   * database (if it was created) and deletes its domain and tenant rows.
+   */
+  private async rollbackTenant(tenantId: string): Promise<void> {
+    const dbName = tenantDbName(tenantId);
+    const adminPool = new Pool({
+      connectionString: this.config.getOrThrow<string>('CONTROL_PLANE_DATABASE_URL'),
+    });
+    try {
+      await adminPool.query(`DROP DATABASE IF EXISTS "${dbName}"`);
+    } catch (err) {
+      this.logger.error(`Failed to drop database "${dbName}" during rollback`, err as Error);
+    } finally {
+      await adminPool.end();
+    }
+
+    const db = this.controlPlaneDb.db;
+    await db.delete(schema.tenantDomains).where(eq(schema.tenantDomains.tenantId, tenantId));
+    await db.delete(schema.tenants).where(eq(schema.tenants.id, tenantId));
   }
 
   /**
