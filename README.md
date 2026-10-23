@@ -103,6 +103,10 @@ cp apps/api/.env.example apps/api/.env.local
 cd apps/api
 npx drizzle-kit push
 
+# Create a platform admin for the admin console (re-run to reset the password)
+npm run build
+PLATFORM_ADMIN_EMAIL=admin@vima.app PLATFORM_ADMIN_PASSWORD='<12+ chars>' npm run seed:platform-admin
+
 # Start the API
 npm run start:dev
 
