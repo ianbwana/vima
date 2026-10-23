@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { CatalogService } from '../../catalog/services/catalog.service';
 import { OrderService } from '../../catalog/services/order.service';
 import { PlaceOrderDto } from '../../catalog/dto/order.dto';
+import { TenantId } from '../../tenancy/decorators/tenant.decorator';
 
 /**
  * FoodController
@@ -22,8 +23,7 @@ export class FoodController {
    * GET /food/restaurants
    */
   @Get('restaurants')
-  async listRestaurants(@Req() req: any, @Query('zone') zoneId?: string) {
-    const { tenantId } = req.user;
+  async listRestaurants(@TenantId() tenantId: string, @Query('zone') zoneId?: string) {
     const merchants = await this.catalogService.listMerchants(tenantId, 'restaurant', zoneId);
     return { restaurants: merchants };
   }

@@ -3,6 +3,7 @@ import { CatalogService } from '../../catalog/services/catalog.service';
 import { OrderService } from '../../catalog/services/order.service';
 import { GroceryOrderService } from '../services/grocery-order.service';
 import { PlaceOrderDto } from '../../catalog/dto/order.dto';
+import { TenantId } from '../../tenancy/decorators/tenant.decorator';
 
 /**
  * GroceriesController
@@ -24,8 +25,7 @@ export class GroceriesController {
    * GET /groceries/stores
    */
   @Get('stores')
-  async listStores(@Req() req: any, @Query('zone') zoneId?: string) {
-    const { tenantId } = req.user;
+  async listStores(@TenantId() tenantId: string, @Query('zone') zoneId?: string) {
     const merchants = await this.catalogService.listMerchants(tenantId, 'grocery_store', zoneId);
     return { stores: merchants };
   }

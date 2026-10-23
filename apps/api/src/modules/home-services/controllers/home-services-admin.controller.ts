@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { TenantDbService } from '../../../database/tenant-db.service';
+import { TenantId } from '../../tenancy/decorators/tenant.decorator';
 import * as schema from '../../../database/schemas/tenant.schema';
 import { CreateServiceCategoryDto, CreatePriceCardDto } from '../dto/home-services.dto';
 
@@ -17,8 +18,8 @@ export class HomeServicesAdminController {
   constructor(private readonly tenantDb: TenantDbService) {}
 
   @Post('categories')
-  async createCategory(@Req() req: any, @Body() dto: CreateServiceCategoryDto) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+  async createCategory(@TenantId() tenantId: string, @Body() dto: CreateServiceCategoryDto) {
+    const db = this.tenantDb.getConnection(tenantId);
     const [category] = await db
       .insert(schema.serviceCategories)
       .values({
@@ -32,22 +33,22 @@ export class HomeServicesAdminController {
   }
 
   @Get('categories')
-  async listCategories(@Req() req: any) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+  async listCategories(@TenantId() tenantId: string) {
+    const db = this.tenantDb.getConnection(tenantId);
     const categories = await db.select().from(schema.serviceCategories).orderBy(schema.serviceCategories.sortOrder);
     return { categories };
   }
 
   @Delete('categories/:id')
-  async deleteCategory(@Req() req: any, @Param('id') id: string) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+  async deleteCategory(@TenantId() tenantId: string, @Param('id') id: string) {
+    const db = this.tenantDb.getConnection(tenantId);
     await db.update(schema.serviceCategories).set({ active: false }).where(eq(schema.serviceCategories.id, id));
     return { success: true };
   }
 
   @Post('price-cards')
-  async createPriceCard(@Req() req: any, @Body() dto: CreatePriceCardDto) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+  async createPriceCard(@TenantId() tenantId: string, @Body() dto: CreatePriceCardDto) {
+    const db = this.tenantDb.getConnection(tenantId);
     const [card] = await db
       .insert(schema.servicePriceCards)
       .values({
@@ -64,15 +65,15 @@ export class HomeServicesAdminController {
   }
 
   @Get('price-cards')
-  async listPriceCards(@Req() req: any) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+  async listPriceCards(@TenantId() tenantId: string) {
+    const db = this.tenantDb.getConnection(tenantId);
     const cards = await db.select().from(schema.servicePriceCards);
     return { priceCards: cards };
   }
 
   @Delete('price-cards/:id')
-  async deletePriceCard(@Req() req: any, @Param('id') id: string) {
-    const db = this.tenantDb.getConnection(req.user.tenantId);
+  async deletePriceCard(@TenantId() tenantId: string, @Param('id') id: string) {
+    const db = this.tenantDb.getConnection(tenantId);
     await db.delete(schema.servicePriceCards).where(eq(schema.servicePriceCards.id, id));
     return { success: true };
   }
