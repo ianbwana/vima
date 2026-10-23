@@ -33,3 +33,6 @@ coverage/
 # Misc
 *.log
 npm-debug.log*
+
+# Claude Code worktrees
+.claude/worktrees/

@@ -86,14 +86,14 @@ export default function SignupPage() {
       {/* Nav */}
       <nav className="border-b border-gray-100 bg-white/80 backdrop-blur-md">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-text-primary">Vima</Link>
-          <Link href="/login" className="text-sm text-gray-600 hover:text-text-primary">Already have an account? Sign in</Link>
+          <Link href="/" className="text-xl font-bold text-black">Vima</Link>
+          <Link href="/login" className="text-sm text-black hover:text-black">Already have an account? Sign in</Link>
         </div>
       </nav>
 
       <div className="max-w-2xl mx-auto px-6 py-12">
-        <h1 className="text-3xl font-bold text-text-primary">Launch your super-app</h1>
-        <p className="mt-2 text-gray-600">Set up your platform in under 5 minutes. No credit card required to start.</p>
+        <h1 className="text-3xl font-bold text-black">Launch your super-app</h1>
+        <p className="mt-2 text-black">Set up your platform in under 5 minutes. No credit card required to start.</p>
 
         {/* Progress */}
         <div className="mt-8 flex items-center gap-2">
@@ -107,7 +107,7 @@ export default function SignupPage() {
               {s < 3 && <div className={`w-12 h-0.5 ${s < step ? 'bg-accent' : 'bg-gray-200'}`} />}
             </div>
           ))}
-          <span className="ml-3 text-sm text-gray-500">
+          <span className="ml-3 text-sm text-black">
             {step === 1 ? 'Your business' : step === 2 ? 'Choose services' : 'Review & launch'}
           </span>
         </div>
@@ -119,48 +119,48 @@ export default function SignupPage() {
         {/* Step 1: Business info */}
         {step === 1 && (
           <div className="mt-8 bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
-            <h2 className="text-lg font-bold text-text-primary">Tell us about your business</h2>
+            <h2 className="text-lg font-bold text-black">Tell us about your business</h2>
             <div className="mt-6 space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Company name</label>
+                <label className="block text-sm font-medium text-black mb-1.5">Company name</label>
                 <input
                   type="text"
                   value={form.companyName}
                   onChange={(e) => setForm({ ...form, companyName: e.target.value, slug: generateSlug(e.target.value) })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-text-primary focus:outline-none focus:border-green focus:ring-1 focus:ring-[#E91E63]"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-black focus:outline-none focus:border-green focus:ring-1 focus:ring-[#E91E63]"
                   placeholder="Acme Transport"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Your subdomain</label>
+                <label className="block text-sm font-medium text-black mb-1.5">Your subdomain</label>
                 <div className="flex">
                   <input
                     type="text"
                     value={form.slug}
                     onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })}
-                    className="flex-1 px-4 py-3 border border-gray-200 rounded-l-xl text-text-primary focus:outline-none focus:border-green"
+                    className="flex-1 px-4 py-3 border border-gray-200 rounded-l-xl text-black focus:outline-none focus:border-green"
                     placeholder="acme-transport"
                   />
-                  <span className="px-4 py-3 bg-gray-50 border border-l-0 border-gray-200 rounded-r-xl text-gray-500 text-sm">.vima.app</span>
+                  <span className="px-4 py-3 bg-gray-50 border border-l-0 border-gray-200 rounded-r-xl text-black text-sm">.vima.app</span>
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Admin email</label>
+                <label className="block text-sm font-medium text-black mb-1.5">Admin email</label>
                 <input
                   type="email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-text-primary focus:outline-none focus:border-green focus:ring-1 focus:ring-[#E91E63]"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-black focus:outline-none focus:border-green focus:ring-1 focus:ring-[#E91E63]"
                   placeholder="you@company.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+                <label className="block text-sm font-medium text-black mb-1.5">Password</label>
                 <input
                   type="password"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-text-primary focus:outline-none focus:border-green focus:ring-1 focus:ring-[#E91E63]"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-black focus:outline-none focus:border-green focus:ring-1 focus:ring-[#E91E63]"
                   placeholder="Choose a strong password"
                 />
               </div>
@@ -179,8 +179,8 @@ export default function SignupPage() {
         {step === 2 && (
           <div className="mt-8">
             <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
-              <h2 className="text-lg font-bold text-text-primary">Choose your services</h2>
-              <p className="text-sm text-gray-500 mt-1">Each service adds to your monthly bill. Pick at least one.</p>
+              <h2 className="text-lg font-bold text-black">Choose your services</h2>
+              <p className="text-sm text-black mt-1">Each service adds to your monthly bill. Pick at least one.</p>
 
               <div className="mt-6 space-y-3">
                 {MODULES.map((mod) => {
@@ -201,13 +201,13 @@ export default function SignupPage() {
                       <div className="flex items-center gap-4">
                         <span className="text-2xl">{mod.icon}</span>
                         <div>
-                          <p className="text-sm font-medium text-text-primary">{mod.name}</p>
-                          <p className="text-xs text-gray-500">{mod.desc}</p>
+                          <p className="text-sm font-medium text-black">{mod.name}</p>
+                          <p className="text-xs text-black">{mod.desc}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-bold text-green">+${mod.fee}</p>
-                        <p className="text-xs text-gray-400">/month</p>
+                        <p className="text-sm font-bold text-black">+${mod.fee}</p>
+                        <p className="text-xs text-black">/month</p>
                       </div>
                     </button>
                   );
@@ -218,14 +218,14 @@ export default function SignupPage() {
             {/* Running total */}
             <div className="mt-4 bg-white rounded-2xl border border-green/20 p-5 flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Estimated monthly cost</p>
-                <p className="text-xs text-gray-400 mt-0.5">Base $199 + {form.modules.length} module{form.modules.length !== 1 ? 's' : ''}</p>
+                <p className="text-sm text-black">Estimated monthly cost</p>
+                <p className="text-xs text-black mt-0.5">Base $199 + {form.modules.length} module{form.modules.length !== 1 ? 's' : ''}</p>
               </div>
-              <p className="text-2xl font-bold text-green">${totalMonthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
+              <p className="text-2xl font-bold text-black">${totalMonthly}<span className="text-sm font-normal text-black">/mo</span></p>
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button onClick={() => setStep(1)} className="px-6 py-3 border border-gray-200 rounded-full text-sm text-gray-600 hover:border-gray-400 transition-colors">
+              <button onClick={() => setStep(1)} className="px-6 py-3 border border-gray-200 rounded-full text-sm text-black hover:border-gray-400 transition-colors">
                 Back
               </button>
               <button
@@ -242,45 +242,45 @@ export default function SignupPage() {
         {/* Step 3: Review & launch */}
         {step === 3 && (
           <div className="mt-8 bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
-            <h2 className="text-lg font-bold text-text-primary">Review & launch</h2>
+            <h2 className="text-lg font-bold text-black">Review & launch</h2>
             <div className="mt-6 space-y-4">
               <div className="flex justify-between py-3 border-b border-gray-100">
-                <span className="text-sm text-gray-500">Company</span>
-                <span className="text-sm font-medium text-text-primary">{form.companyName}</span>
+                <span className="text-sm text-black">Company</span>
+                <span className="text-sm font-medium text-black">{form.companyName}</span>
               </div>
               <div className="flex justify-between py-3 border-b border-gray-100">
-                <span className="text-sm text-gray-500">URL</span>
-                <span className="text-sm text-text-primary">{form.slug}.vima.app</span>
+                <span className="text-sm text-black">URL</span>
+                <span className="text-sm text-black">{form.slug}.vima.app</span>
               </div>
               <div className="flex justify-between py-3 border-b border-gray-100">
-                <span className="text-sm text-gray-500">Admin</span>
-                <span className="text-sm text-text-primary">{form.email}</span>
+                <span className="text-sm text-black">Admin</span>
+                <span className="text-sm text-black">{form.email}</span>
               </div>
               <div className="py-3 border-b border-gray-100">
-                <p className="text-sm text-gray-500 mb-2">Services</p>
+                <p className="text-sm text-black mb-2">Services</p>
                 <div className="flex flex-wrap gap-2">
                   {form.modules.map((key) => {
                     const mod = MODULES.find((m) => m.key === key);
                     return (
-                      <span key={key} className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent/5 text-green rounded-full text-xs font-medium">
-                        {mod?.icon} {mod?.name} <span className="text-green/60">+${mod?.fee}</span>
+                      <span key={key} className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent/5 text-black rounded-full text-xs font-medium">
+                        {mod?.icon} {mod?.name} <span className="text-black">+${mod?.fee}</span>
                       </span>
                     );
                   })}
                 </div>
               </div>
               <div className="flex justify-between py-3">
-                <span className="text-sm font-medium text-text-primary">Monthly total</span>
-                <span className="text-xl font-bold text-green">${totalMonthly}/mo</span>
+                <span className="text-sm font-medium text-black">Monthly total</span>
+                <span className="text-xl font-bold text-black">${totalMonthly}/mo</span>
               </div>
             </div>
 
-            <p className="mt-6 text-xs text-gray-400 text-center">
+            <p className="mt-6 text-xs text-black text-center">
               Start with a 14-day free trial. No credit card required. Cancel anytime.
             </p>
 
             <div className="mt-6 flex gap-3">
-              <button onClick={() => setStep(2)} className="px-6 py-3 border border-gray-200 rounded-full text-sm text-gray-600 hover:border-gray-400 transition-colors">
+              <button onClick={() => setStep(2)} className="px-6 py-3 border border-gray-200 rounded-full text-sm text-black hover:border-gray-400 transition-colors">
                 Back
               </button>
               <button
