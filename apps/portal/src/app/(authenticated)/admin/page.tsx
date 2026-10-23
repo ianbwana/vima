@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { apiClient } from '../../../lib/api-client';
+import { apiClient, ApiError } from '../../../lib/api-client';
 
 interface Tenant {
   id: string;
@@ -16,6 +16,7 @@ interface Tenant {
 export default function PlatformAdminPage() {
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
   const [viewMode, setViewMode] = useState<'admin' | 'tenant' | 'customer'>('admin');
 
@@ -25,13 +26,20 @@ export default function PlatformAdminPage() {
 
   async function fetchTenants() {
     setLoading(true);
+    setError(null);
     try {
-      const res = await fetch('/api/tenants');
-      if (res.ok) {
-        const data = await res.json();
-        setTenants(Array.isArray(data) ? data : data.tenants || []);
-      }
-    } catch {}
+      const data = await apiClient<Tenant[] | { tenants: Tenant[] }>('/tenants');
+      setTenants(Array.isArray(data) ? data : data.tenants || []);
+    } catch (err) {
+      // GET /tenants requires a platform_admin token; tenant staff get 403.
+      setError(
+        err instanceof ApiError && err.status === 403
+          ? 'Only platform administrators can view all tenants. Use the Vima admin portal to manage tenants.'
+          : err instanceof Error
+            ? err.message
+            : 'Failed to load tenants',
+      );
+    }
     setLoading(false);
   }
 
@@ -73,6 +81,8 @@ export default function PlatformAdminPage() {
           </div>
           {loading ? (
             <div className="p-6 space-y-3">{[1, 2, 3].map((i) => <div key={i} className="h-14 bg-background-elevated rounded animate-pulse" />)}</div>
+          ) : error ? (
+            <div className="p-8 text-center text-text-secondary">{error}</div>
           ) : tenants.length === 0 ? (
             <div className="p-8 text-center text-text-muted">No tenants yet.</div>
           ) : (

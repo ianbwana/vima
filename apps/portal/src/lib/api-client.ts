@@ -7,7 +7,7 @@
  * - If refresh fails, redirects to /login
  */
 
-import { isTokenExpired, type AuthTokens } from './auth';
+import { decodeJwtPayload, isTokenExpired, type AuthTokens } from './auth';
 
 // Module-level token store (lives in browser memory only)
 let accessToken: string | null = null;
@@ -106,9 +106,12 @@ export async function apiClient<T = unknown>(
   }
 
   const makeRequest = () => {
+    // Once logged in, scope requests to the token's own tenant — the API
+    // rejects tokens used against a different tenant.
+    const tokenTenantId = accessToken ? decodeJwtPayload(accessToken)?.tenantId : undefined;
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'X-Tenant-Id': 'demo',
+      'X-Tenant-Id': typeof tokenTenantId === 'string' ? tokenTenantId : 'demo',
       ...(customHeaders as Record<string, string>),
     };
 
