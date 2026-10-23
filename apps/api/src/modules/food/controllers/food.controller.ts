@@ -33,8 +33,7 @@ export class FoodController {
    * GET /food/restaurants/:id/menu
    */
   @Get('restaurants/:id/menu')
-  async getMenu(@Req() req: any, @Param('id') merchantId: string) {
-    const { tenantId } = req.user;
+  async getMenu(@TenantId() tenantId: string, @Param('id') merchantId: string) {
     const menu = await this.catalogService.getFullMenu(tenantId, merchantId);
     return { menu };
   }
@@ -44,8 +43,8 @@ export class FoodController {
    * POST /food/orders
    */
   @Post('orders')
-  async placeOrder(@Req() req: any, @Body() dto: PlaceOrderDto) {
-    const { tenantId, sub: userId } = req.user;
+  async placeOrder(@TenantId() tenantId: string, @Req() req: any, @Body() dto: PlaceOrderDto) {
+    const userId = req.user?.sub;
     const order = await this.orderService.placeOrder(tenantId, userId, dto);
     return { order };
   }
@@ -55,8 +54,7 @@ export class FoodController {
    * GET /food/orders/:id
    */
   @Get('orders/:id')
-  async getOrder(@Req() req: any, @Param('id') orderId: string) {
-    const { tenantId } = req.user;
+  async getOrder(@TenantId() tenantId: string, @Param('id') orderId: string) {
     const order = await this.orderService.getOrder(tenantId, orderId);
     return { order };
   }
@@ -66,8 +64,8 @@ export class FoodController {
    * GET /food/orders
    */
   @Get('orders')
-  async listOrders(@Req() req: any) {
-    const { tenantId, sub: userId } = req.user;
+  async listOrders(@TenantId() tenantId: string, @Req() req: any) {
+    const userId = req.user?.sub;
     const orders = await this.orderService.listCustomerOrders(tenantId, userId);
     return { orders };
   }
