@@ -31,7 +31,7 @@ export class FoodMerchantController {
    */
   @Get('catalogs')
   async listCatalogs(@Req() req: any) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const merchant = await this.catalogService.getMerchantByUserId(tenantId, userId);
     if (!merchant) return { catalogs: [] };
     const catalogs = await this.catalogService.listCatalogs(tenantId, merchant.id);
@@ -44,7 +44,7 @@ export class FoodMerchantController {
    */
   @Post('catalogs')
   async createCatalog(@Req() req: any, @Body() dto: CreateCatalogDto) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const catalog = await this.catalogService.createCatalog(tenantId, dto);
     return { catalog };
   }
@@ -55,7 +55,7 @@ export class FoodMerchantController {
    */
   @Post('items')
   async createItem(@Req() req: any, @Body() dto: CreateCatalogItemDto) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const item = await this.catalogService.createItem(tenantId, dto);
     return { item };
   }
@@ -66,7 +66,7 @@ export class FoodMerchantController {
    */
   @Patch('items/:id')
   async updateItem(@Req() req: any, @Param('id') itemId: string, @Body() dto: UpdateCatalogItemDto) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const item = await this.catalogService.updateItem(tenantId, itemId, dto);
     return { item };
   }
@@ -77,7 +77,7 @@ export class FoodMerchantController {
    */
   @Post('items/:id/availability')
   async toggleAvailability(@Req() req: any, @Param('id') itemId: string, @Body() body: { available: boolean }) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     await this.catalogService.toggleItemAvailability(tenantId, itemId, body.available);
     return { success: true };
   }
@@ -88,7 +88,7 @@ export class FoodMerchantController {
    */
   @Post('modifier-groups')
   async createModifierGroup(@Req() req: any, @Body() dto: CreateModifierGroupDto) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const group = await this.catalogService.createModifierGroup(tenantId, dto);
     return { group };
   }
@@ -99,7 +99,7 @@ export class FoodMerchantController {
    */
   @Post('modifiers')
   async createModifier(@Req() req: any, @Body() dto: CreateModifierDto) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const modifier = await this.catalogService.createModifier(tenantId, dto);
     return { modifier };
   }
@@ -112,7 +112,7 @@ export class FoodMerchantController {
    */
   @Get('orders')
   async listOrders(@Req() req: any, @Query('status') status?: string) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const merchant = await this.catalogService.getMerchantByUserId(tenantId, userId);
     if (!merchant) return { orders: [] };
     const orders = await this.orderService.listMerchantOrders(tenantId, merchant.id, status);
@@ -125,7 +125,7 @@ export class FoodMerchantController {
    */
   @Post('orders/:id/accept')
   async acceptOrder(@Req() req: any, @Param('id') orderId: string) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const order = await this.orderService.acceptOrder(tenantId, orderId, userId);
     return { order };
   }
@@ -136,7 +136,7 @@ export class FoodMerchantController {
    */
   @Post('orders/:id/ready')
   async markReady(@Req() req: any, @Param('id') orderId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const order = await this.orderService.markReady(tenantId, orderId);
     return { order };
   }

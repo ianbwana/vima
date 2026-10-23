@@ -37,7 +37,7 @@ export class GroceryMerchantController {
       }>;
     },
   ) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const count = await this.catalogService.bulkImportItems(tenantId, body.catalogId, body.items);
     return { success: true, importedCount: count };
   }
@@ -48,7 +48,7 @@ export class GroceryMerchantController {
    */
   @Get('orders')
   async listOrders(@Req() req: any, @Query('status') status?: string) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const merchant = await this.catalogService.getMerchantByUserId(tenantId, userId);
     if (!merchant) return { orders: [] };
     const orders = await this.orderService.listMerchantOrders(tenantId, merchant.id, status);
@@ -61,7 +61,7 @@ export class GroceryMerchantController {
    */
   @Post('orders/:id/accept')
   async acceptOrder(@Req() req: any, @Param('id') orderId: string) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const order = await this.orderService.acceptOrder(tenantId, orderId, userId);
     return { order };
   }
@@ -76,7 +76,7 @@ export class GroceryMerchantController {
     @Param('id') orderId: string,
     @Body() body: { originalItemId: string; proposedItemId: string },
   ) {
-    const { tenantId, sub: userId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
     const substitution = await this.groceryOrderService.proposeSubstitution(
       tenantId,
       orderId,
@@ -97,7 +97,7 @@ export class GroceryMerchantController {
     @Param('id') orderItemId: string,
     @Body() body: { actualWeight: number },
   ) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const result = await this.groceryOrderService.updateItemWeight(
       tenantId,
       orderItemId,
@@ -112,7 +112,7 @@ export class GroceryMerchantController {
    */
   @Post('orders/:id/ready')
   async markReady(@Req() req: any, @Param('id') orderId: string) {
-    const { tenantId } = req.user;
+    const tenantId = req.tenantId || req.user?.tenantId;
     const order = await this.orderService.markReady(tenantId, orderId);
     return { order };
   }
