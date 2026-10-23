@@ -66,11 +66,16 @@ export default function SignupPage() {
           email: form.email,
           password: form.password,
           name: form.companyName + ' Admin',
-          role: 'owner',
+          // RegisterDto does not accept 'owner'; 'admin' has full portal access.
+          role: 'admin',
         }),
       });
       if (!res.ok) {
-        // Tenant created but user registration failed — still redirect to login
+        const body = await res.json().catch(() => ({}));
+        const detail = Array.isArray(body.message) ? body.message.join(', ') : body.message;
+        throw new Error(
+          `Your platform was created, but we couldn't create your admin account${detail ? `: ${detail}` : ''}. Please contact support.`,
+        );
       }
 
       router.push('/login');
@@ -161,13 +166,14 @@ export default function SignupPage() {
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl text-black focus:outline-none focus:border-green focus:ring-1 focus:ring-[#E91E63]"
-                  placeholder="Choose a strong password"
+                  minLength={8}
+                  placeholder="At least 8 characters"
                 />
               </div>
             </div>
             <button
               onClick={() => setStep(2)}
-              disabled={!form.companyName || !form.slug || !form.email || !form.password}
+              disabled={!form.companyName || !form.slug || !form.email || form.password.length < 8}
               className="mt-8 w-full py-3 bg-accent text-text-primary rounded-full font-medium hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Continue
