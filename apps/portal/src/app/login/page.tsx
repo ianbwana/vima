@@ -43,7 +43,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
+    <div className="flex min-h-screen">
+      {/* Left side — image */}
+      <div className="hidden lg:block lg:w-1/2 relative">
+        <img
+          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&h=1600&fit=crop"
+          alt="Team collaborating on platform"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
+        <div className="absolute bottom-12 left-12 right-12">
+          <p className="text-white text-2xl font-bold">Launch your super-app in days, not months.</p>
+          <p className="text-white/70 text-sm mt-2">Tenancy, payments, dispatch, and branding — all under your brand.</p>
+        </div>
+      </div>
+      {/* Right side — login form */}
+      <div className="flex-1 flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {/* Logo / App Name */}
         <div className="mb-8 text-center">
@@ -147,6 +162,7 @@ export default function LoginPage() {
             </button>
           </form>
         </div>
+      </div>
       </div>
     </div>
   );

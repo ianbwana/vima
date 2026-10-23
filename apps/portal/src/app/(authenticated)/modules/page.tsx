@@ -7,7 +7,7 @@ import { ConfirmDialog } from '../../../components/ui/confirm-dialog';
 import { ToastContainer, useToast } from '../../../components/ui/toast';
 
 interface ModuleInfo {
-  key: string;
+  key: Exclude<keyof Entitlements, 'tier'>;
   name: string;
   description: string;
   monthlyFee: number;
@@ -163,7 +163,7 @@ export default function ModulesPage() {
           <p className="text-text-secondary">{error}</p>
           <button
             onClick={fetchEntitlements}
-            className="mt-4 px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
+            className="mt-4 px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
           >
             Retry
           </button>
@@ -179,7 +179,7 @@ export default function ModulesPage() {
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {MODULES.map((mod) => {
-          const isEnabled = entitlements ? (entitlements as Record<string, boolean>)[mod.key] ?? false : false;
+          const isEnabled = entitlements ? entitlements[mod.key] : false;
           const isToggling = pendingToggle === mod.key;
 
           return (

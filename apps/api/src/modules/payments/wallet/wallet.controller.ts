@@ -11,6 +11,9 @@ import {
 import { JwtAuthGuard } from '@/modules/identity/guards/jwt-auth.guard';
 import { TenantId } from '@/modules/tenancy/decorators/tenant.decorator';
 import { UserId } from '@/modules/identity/decorators/user-id.decorator';
+import { TenantDbService } from '@/database/tenant-db.service';
+import * as tenantSchema from '@/database/schemas/tenant.schema';
+import { desc, inArray } from 'drizzle-orm';
 import { WalletService } from './wallet.service';
 import { TopupDto } from './dto/topup.dto';
 import { TransferDto } from './dto/transfer.dto';
@@ -19,7 +22,60 @@ import { RefundDto } from './dto/refund.dto';
 @Controller('wallet')
 @UseGuards(JwtAuthGuard)
 export class WalletController {
-  constructor(private readonly walletService: WalletService) {}
+  constructor(
+    private readonly walletService: WalletService,
+    private readonly tenantDb: TenantDbService,
+  ) {}
+
+  /**
+   * GET /wallet/transactions?limit=10
+   * List recent ledger transactions (newest first) with their entries.
+   */
+  @Get('transactions')
+  async listTransactions(
+    @TenantId() tenantId: string,
+    @Query('limit') limitRaw?: string,
+  ) {
+    const db = this.tenantDb.getConnection(tenantId);
+    const limit = Math.min(100, Math.max(1, parseInt(limitRaw ?? '20', 10) || 20));
+
+    const txns = await db
+      .select()
+      .from(tenantSchema.ledgerTransactions)
+      .orderBy(desc(tenantSchema.ledgerTransactions.createdAt))
+      .limit(limit);
+
+    if (txns.length === 0) {
+      return [];
+    }
+
+    const txnIds = txns.map((t) => t.id);
+    const entries = await db
+      .select({
+        id: tenantSchema.ledgerEntries.id,
+        transactionId: tenantSchema.ledgerEntries.transactionId,
+        amount: tenantSchema.ledgerEntries.amount,
+        direction: tenantSchema.ledgerEntries.direction,
+      })
+      .from(tenantSchema.ledgerEntries)
+      .where(inArray(tenantSchema.ledgerEntries.transactionId, txnIds));
+
+    const entriesByTxn = new Map<string, Array<{ id: string; amount: string; direction: string }>>();
+    for (const e of entries) {
+      const list = entriesByTxn.get(e.transactionId) ?? [];
+      list.push({ id: e.id, amount: e.amount, direction: e.direction });
+      entriesByTxn.set(e.transactionId, list);
+    }
+
+    return txns.map((t) => ({
+      id: t.id,
+      type: t.type,
+      referenceId: t.referenceId ?? undefined,
+      description: t.description ?? undefined,
+      entries: entriesByTxn.get(t.id) ?? [],
+      createdAt: t.createdAt,
+    }));
+  }
 
   /**
    * POST /wallet/topup

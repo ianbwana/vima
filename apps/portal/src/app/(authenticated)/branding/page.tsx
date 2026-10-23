@@ -165,7 +165,7 @@ export default function BrandingPage() {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-              activeTab === tab ? 'bg-accent text-white' : 'text-text-secondary hover:text-text-primary'
+              activeTab === tab ? 'bg-accent text-text-primary' : 'text-text-secondary hover:text-text-primary'
             }`}
           >
             {tab === 'theme' ? 'Theme Editor' : tab === 'domains' ? 'Custom Domains' : 'App Builds'}
@@ -237,7 +237,7 @@ export default function BrandingPage() {
               <button onClick={() => handleSaveTheme(false)} disabled={saving} className="px-4 py-2 bg-background-elevated text-text-primary border border-border rounded-lg text-sm font-medium hover:bg-background-surface transition-colors disabled:opacity-50">
                 Save Draft
               </button>
-              <button onClick={() => handleSaveTheme(true)} disabled={saving} className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50">
+              <button onClick={() => handleSaveTheme(true)} disabled={saving} className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50">
                 Save & Publish
               </button>
             </div>
@@ -293,7 +293,7 @@ export default function BrandingPage() {
               className="flex-1 px-3 py-2 bg-background-elevated border border-border rounded-lg text-text-primary text-sm focus:outline-none focus:border-accent"
               placeholder="app.yourbrand.com"
             />
-            <button type="submit" className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
+            <button type="submit" className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
               Add Domain
             </button>
           </form>
@@ -338,10 +338,10 @@ export default function BrandingPage() {
             <p className="mt-1 text-xs text-text-muted">Generate dedicated native apps (iOS + Android) for your brand.</p>
             <p className="mt-1 text-xs text-text-muted">Available on Scale tier. Configure your theme and assets first.</p>
             <div className="mt-4 flex justify-center gap-3">
-              <button className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors opacity-50" disabled>
+              <button className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors opacity-50" disabled>
                 Build iOS App
               </button>
-              <button className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors opacity-50" disabled>
+              <button className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors opacity-50" disabled>
                 Build Android App
               </button>
             </div>

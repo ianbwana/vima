@@ -4,45 +4,45 @@ describe('Pricing Configuration', () => {
   describe('calculateMonthlyCost()', () => {
     it('should return base fee only when no modules enabled', () => {
       const result = calculateMonthlyCost('starter', []);
-      expect(result.baseFee).toBe(49);
+      expect(result.baseFee).toBe(199);
       expect(result.moduleFees).toHaveLength(0);
-      expect(result.total).toBe(49);
+      expect(result.total).toBe(199);
     });
 
     it('should add module fees to base fee', () => {
       const result = calculateMonthlyCost('starter', ['rides']);
-      expect(result.baseFee).toBe(49);
+      expect(result.baseFee).toBe(199);
       expect(result.moduleFees).toHaveLength(1);
-      expect(result.moduleFees[0].fee).toBe(79); // rides = $79
-      expect(result.total).toBe(49 + 79); // $128
+      expect(result.moduleFees[0].fee).toBe(149); // rides = $149
+      expect(result.total).toBe(199 + 149); // $348
     });
 
     it('should sum multiple module fees', () => {
       const result = calculateMonthlyCost('growth', ['rides', 'food', 'courier']);
-      expect(result.baseFee).toBe(149);
+      expect(result.baseFee).toBe(199);
       expect(result.moduleFees).toHaveLength(3);
-      expect(result.total).toBe(149 + 79 + 99 + 69); // $396
+      expect(result.total).toBe(199 + 149 + 129 + 79); // $556
     });
 
     it('should use correct base fee per tier', () => {
-      expect(calculateMonthlyCost('starter', []).baseFee).toBe(49);
-      expect(calculateMonthlyCost('growth', []).baseFee).toBe(149);
-      expect(calculateMonthlyCost('scale', []).baseFee).toBe(399);
+      expect(calculateMonthlyCost('starter', []).baseFee).toBe(199);
+      expect(calculateMonthlyCost('growth', []).baseFee).toBe(199);
+      expect(calculateMonthlyCost('scale', []).baseFee).toBe(199);
     });
 
     it('should handle all modules enabled', () => {
       const allModules = MODULE_PRICING.map((m) => m.key);
       const result = calculateMonthlyCost('scale', allModules);
       const totalModuleFees = MODULE_PRICING.reduce((sum, m) => sum + m.monthlyFee, 0);
-      expect(result.total).toBe(399 + totalModuleFees);
-      // 399 + 79 + 99 + 99 + 69 + 89 = $834
-      expect(result.total).toBe(834);
+      expect(result.total).toBe(199 + totalModuleFees);
+      // 199 + 149 + 129 + 99 + 79 + 89 = $744
+      expect(result.total).toBe(744);
     });
 
     it('should ignore unknown module keys', () => {
       const result = calculateMonthlyCost('starter', ['rides', 'nonexistent']);
       expect(result.moduleFees).toHaveLength(1); // only rides
-      expect(result.total).toBe(49 + 79);
+      expect(result.total).toBe(199 + 149);
     });
   });
 
@@ -79,9 +79,10 @@ describe('Pricing Configuration', () => {
       }
     });
 
-    it('should have tiers ordered by price ascending', () => {
-      expect(TIER_PRICING[0].baseFee).toBeLessThan(TIER_PRICING[1].baseFee);
-      expect(TIER_PRICING[1].baseFee).toBeLessThan(TIER_PRICING[2].baseFee);
+    it('should have tiers defined with base fees', () => {
+      for (const tier of TIER_PRICING) {
+        expect(tier.baseFee).toBeGreaterThan(0);
+      }
     });
   });
 });

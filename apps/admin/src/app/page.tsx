@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { adminFetch, isAdminAuthenticated, clearAdminTokens } from '../lib/admin-auth';
 
 interface Tenant {
   id: string;
@@ -14,30 +16,37 @@ interface Tenant {
 }
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, active: 0, starter: 0, growth: 0, scale: 0 });
 
   useEffect(() => {
+    if (!isAdminAuthenticated()) {
+      router.replace('/login');
+      return;
+    }
     fetchTenants();
-  }, []);
+  }, [router]);
+
+  function handleLogout() {
+    clearAdminTokens();
+    router.replace('/login');
+  }
 
   async function fetchTenants() {
     setLoading(true);
     try {
-      const res = await fetch('/api/tenants');
-      if (res.ok) {
-        const data = await res.json();
-        const list = Array.isArray(data) ? data : data.tenants || [];
-        setTenants(list);
-        setStats({
-          total: list.length,
-          active: list.filter((t: Tenant) => t.status === 'active').length,
-          starter: list.filter((t: Tenant) => t.tier === 'starter').length,
-          growth: list.filter((t: Tenant) => t.tier === 'growth').length,
-          scale: list.filter((t: Tenant) => t.tier === 'scale').length,
-        });
-      }
+      const data = await adminFetch<Tenant[] | { tenants: Tenant[] }>('/tenants');
+      const list = Array.isArray(data) ? data : data.tenants || [];
+      setTenants(list);
+      setStats({
+        total: list.length,
+        active: list.filter((t: Tenant) => t.status === 'active').length,
+        starter: list.filter((t: Tenant) => t.tier === 'starter').length,
+        growth: list.filter((t: Tenant) => t.tier === 'growth').length,
+        scale: list.filter((t: Tenant) => t.tier === 'scale').length,
+      });
     } catch {}
     setLoading(false);
   }
@@ -49,12 +58,20 @@ export default function AdminDashboard() {
           <h1 className="text-3xl font-heading text-text-primary">Vima Platform Admin</h1>
           <p className="mt-1 text-text-secondary">Manage tenants, subscriptions, and platform operations.</p>
         </div>
-        <Link
-          href="/signup"
-          className="px-5 py-2.5 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
-        >
-          + New Tenant
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/signup"
+            className="px-5 py-2.5 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
+          >
+            + New Tenant
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2.5 border border-border rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:border-text-muted transition-colors"
+          >
+            Log out
+          </button>
+        </div>
       </div>
 
       {/* Stats */}

@@ -20,7 +20,7 @@ export function NavItem({ href, label, icon }: NavItemProps) {
         flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
         ${
           isActive
-            ? 'bg-accent-muted text-accent border-l-2 border-accent pl-[10px]'
+            ? 'bg-accent-muted text-green font-bold'
             : 'text-text-secondary hover:text-text-primary hover:bg-background-elevated'
         }
       `}

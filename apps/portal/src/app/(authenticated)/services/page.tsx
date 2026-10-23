@@ -119,7 +119,7 @@ export default function ServicesPage() {
         <h1 className="text-2xl font-heading text-text-primary">Services</h1>
         <div className="mt-6 bg-background-surface rounded-card border border-border p-6 text-center">
           <p className="text-text-secondary">{error}</p>
-          <button onClick={fetchAll} className="mt-4 px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
+          <button onClick={fetchAll} className="mt-4 px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
             Retry
           </button>
         </div>
@@ -139,7 +139,7 @@ export default function ServicesPage() {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-              activeTab === tab ? 'bg-accent text-white' : 'text-text-secondary hover:text-text-primary'
+              activeTab === tab ? 'bg-accent text-text-primary' : 'text-text-secondary hover:text-text-primary'
             }`}
           >
             {tab === 'categories' ? 'Service Categories' : tab === 'pricing' ? 'Price Cards' : 'Courier Config'}
@@ -154,7 +154,7 @@ export default function ServicesPage() {
             <h2 className="text-lg font-heading text-text-primary">Service Categories</h2>
             <button
               onClick={() => setShowCatForm(!showCatForm)}
-              className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
+              className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
             >
               {showCatForm ? 'Cancel' : 'Add Category'}
             </button>
@@ -188,7 +188,7 @@ export default function ServicesPage() {
                   </select>
                 </div>
               </div>
-              <button type="submit" className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
+              <button type="submit" className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
                 Create Category
               </button>
             </form>
@@ -232,7 +232,7 @@ export default function ServicesPage() {
             <h2 className="text-lg font-heading text-text-primary">Price Cards</h2>
             <button
               onClick={() => setShowPriceForm(!showPriceForm)}
-              className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
+              className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors"
             >
               {showPriceForm ? 'Cancel' : 'Add Price Card'}
             </button>
@@ -305,7 +305,7 @@ export default function ServicesPage() {
                   </div>
                 )}
               </div>
-              <button type="submit" className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
+              <button type="submit" className="px-4 py-2 bg-accent text-text-primary rounded-lg text-sm font-medium hover:bg-accent-hover transition-colors">
                 Create Price Card
               </button>
             </form>

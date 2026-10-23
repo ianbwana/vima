@@ -3,6 +3,7 @@ import { CatalogService } from '../../catalog/services/catalog.service';
 import { OrderService } from '../../catalog/services/order.service';
 import { GroceryOrderService } from '../services/grocery-order.service';
 import { PlaceOrderDto } from '../../catalog/dto/order.dto';
+import { TenantId } from '../../tenancy/decorators/tenant.decorator';
 
 /**
  * GroceriesController
@@ -24,8 +25,7 @@ export class GroceriesController {
    * GET /groceries/stores
    */
   @Get('stores')
-  async listStores(@Req() req: any, @Query('zone') zoneId?: string) {
-    const tenantId = req.tenantId || req.user?.tenantId;
+  async listStores(@TenantId() tenantId: string, @Query('zone') zoneId?: string) {
     const merchants = await this.catalogService.listMerchants(tenantId, 'grocery_store', zoneId);
     return { stores: merchants };
   }
@@ -35,8 +35,7 @@ export class GroceriesController {
    * GET /groceries/stores/:id/catalog
    */
   @Get('stores/:id/catalog')
-  async getCatalog(@Req() req: any, @Param('id') merchantId: string) {
-    const tenantId = req.tenantId || req.user?.tenantId;
+  async getCatalog(@TenantId() tenantId: string, @Param('id') merchantId: string) {
     const menu = await this.catalogService.getFullMenu(tenantId, merchantId);
     return { catalog: menu };
   }
@@ -46,8 +45,8 @@ export class GroceriesController {
    * POST /groceries/orders
    */
   @Post('orders')
-  async placeOrder(@Req() req: any, @Body() dto: PlaceOrderDto) {
-    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
+  async placeOrder(@TenantId() tenantId: string, @Req() req: any, @Body() dto: PlaceOrderDto) {
+    const userId = req.user?.sub;
     const order = await this.orderService.placeOrder(tenantId, userId, dto);
     return { order };
   }
@@ -57,8 +56,7 @@ export class GroceriesController {
    * GET /groceries/orders/:id
    */
   @Get('orders/:id')
-  async getOrder(@Req() req: any, @Param('id') orderId: string) {
-    const tenantId = req.tenantId || req.user?.tenantId;
+  async getOrder(@TenantId() tenantId: string, @Param('id') orderId: string) {
     const order = await this.orderService.getOrder(tenantId, orderId);
     const substitutions = await this.groceryOrderService.getOrderSubstitutions(tenantId, orderId);
     return { order, substitutions };
@@ -70,11 +68,10 @@ export class GroceriesController {
    */
   @Post('substitutions/:id/respond')
   async respondToSubstitution(
-    @Req() req: any,
+    @TenantId() tenantId: string,
     @Param('id') substitutionId: string,
     @Body() body: { approved: boolean },
   ) {
-    const tenantId = req.tenantId || req.user?.tenantId;
     const result = await this.groceryOrderService.respondToSubstitution(
       tenantId,
       substitutionId,
@@ -88,8 +85,8 @@ export class GroceriesController {
    * GET /groceries/orders
    */
   @Get('orders')
-  async listOrders(@Req() req: any) {
-    const tenantId = req.tenantId || req.user?.tenantId; const userId = req.user?.sub;
+  async listOrders(@TenantId() tenantId: string, @Req() req: any) {
+    const userId = req.user?.sub;
     const orders = await this.orderService.listCustomerOrders(tenantId, userId);
     return { orders };
   }

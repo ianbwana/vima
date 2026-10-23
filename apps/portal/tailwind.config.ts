@@ -2,43 +2,47 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: ['./src/**/*.{ts,tsx}'],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         background: {
-          DEFAULT: '#141414',
-          surface: '#1E1E1E',
-          elevated: '#252525',
+          DEFAULT: '#FAF8F3',
+          surface: '#FFFFFF',
+          elevated: '#F1EFE6',
         },
         accent: {
-          DEFAULT: '#FF6B3D',
-          hover: '#FF8A63',
-          muted: '#FF6B3D1A',
+          DEFAULT: '#C8F169',
+          hover: '#B8E455',
+          muted: 'rgba(200,241,105,0.16)',
         },
         success: {
-          DEFAULT: '#4ADE80',
-          muted: '#4ADE801A',
+          DEFAULT: '#3F7D20',
+          muted: 'rgba(63,125,32,0.1)',
         },
         border: {
-          DEFAULT: '#2A2A2A',
-          subtle: '#1F1F1F',
+          DEFAULT: 'rgba(22,21,14,0.1)',
+          subtle: 'rgba(22,21,14,0.06)',
         },
         text: {
-          primary: '#FFFFFF',
-          secondary: '#A1A1AA',
-          muted: '#71717A',
+          primary: '#16150E',
+          secondary: '#6B6A5E',
+          muted: '#9C9A88',
+        },
+        green: {
+          DEFAULT: '#4B5A1F',
+          light: '#C8F169',
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Instrument Serif', 'Georgia', 'serif'],
       },
       fontWeight: {
         heading: '700',
         metric: '700',
       },
       borderRadius: {
-        card: '12px',
+        card: '16px',
       },
       keyframes: {
         'slide-in': {

@@ -7,14 +7,18 @@ import type { NextRequest } from 'next/server';
  * If absent, redirects to the login page.
  */
 
-// Routes that do not require authentication
-const PUBLIC_ROUTES = ['/login'];
+// Routes that do not require authentication. '/' (the landing page) is matched
+// exactly — a prefix match on '/' would make every route public.
+const PUBLIC_ROUTES = ['/login', '/signup'];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip auth check for public routes
-  if (PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
+  if (
+    pathname === '/' ||
+    PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))
+  ) {
     return NextResponse.next();
   }
 
