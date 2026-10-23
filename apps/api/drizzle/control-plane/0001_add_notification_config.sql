@@ -2,11 +2,13 @@
 -- Stores per-tenant channel provider settings and quiet hours.
 
 -- Enum for supported notification providers
-CREATE TYPE notification_provider AS ENUM ('twilio', 'africas_talking', 'fcm', 'resend', 'ses');
+DO $$ BEGIN
+  CREATE TYPE notification_provider AS ENUM ('twilio', 'africas_talking', 'fcm', 'resend', 'ses');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 -- Tenant-level notification provider configuration
 -- Each tenant can configure which provider to use per channel (and optionally per region)
-CREATE TABLE tenant_notification_config (
+CREATE TABLE IF NOT EXISTS tenant_notification_config (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   channel VARCHAR(20) NOT NULL,
@@ -18,12 +20,12 @@ CREATE TABLE tenant_notification_config (
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_tenant_notification_config_tenant ON tenant_notification_config(tenant_id);
-CREATE UNIQUE INDEX idx_tenant_notification_config_unique ON tenant_notification_config(tenant_id, channel, region);
+CREATE INDEX IF NOT EXISTS idx_tenant_notification_config_tenant ON tenant_notification_config(tenant_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_tenant_notification_config_unique ON tenant_notification_config(tenant_id, channel, region);
 
 -- Quiet hours configuration per tenant
 -- Notifications (except critical) are suppressed during these hours
-CREATE TABLE tenant_quiet_hours (
+CREATE TABLE IF NOT EXISTS tenant_quiet_hours (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   start_hour INTEGER NOT NULL CHECK (start_hour >= 0 AND start_hour <= 23),
@@ -32,4 +34,4 @@ CREATE TABLE tenant_quiet_hours (
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE UNIQUE INDEX idx_tenant_quiet_hours_tenant ON tenant_quiet_hours(tenant_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_tenant_quiet_hours_tenant ON tenant_quiet_hours(tenant_id);

@@ -2,9 +2,7 @@
 set -e
 
 echo "==> Running database migrations..."
-cd /app/apps/api
-npx drizzle-kit migrate
-cd /app
+node apps/api/dist/scripts/migrate-control-plane.js
 
 echo "==> Starting API server..."
 exec node apps/api/dist/main.js

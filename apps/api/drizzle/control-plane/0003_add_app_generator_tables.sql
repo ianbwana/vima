@@ -1,16 +1,30 @@
 -- Migration: Add app generator tables (Phase A)
 -- App projects, endpoints, key grants, build manifests, assets, demos, sounds, updates.
 
-CREATE TYPE app_surface AS ENUM ('customer', 'provider');
-CREATE TYPE app_environment AS ENUM ('production', 'preview', 'demo');
-CREATE TYPE credential_mode AS ENUM ('platform_managed', 'tenant_owned');
-CREATE TYPE key_type AS ENUM ('google_maps', 'firebase', 'psp_publishable', 'sentry', 'mapbox');
-CREATE TYPE moderation_status AS ENUM ('pending', 'approved', 'flagged', 'rejected');
-CREATE TYPE smoke_status AS ENUM ('pending', 'running', 'passed', 'failed');
-CREATE TYPE store_status AS ENUM ('not_submitted', 'submitted', 'in_review', 'approved', 'rejected');
+DO $$ BEGIN
+  CREATE TYPE app_surface AS ENUM ('customer', 'provider');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+DO $$ BEGIN
+  CREATE TYPE app_environment AS ENUM ('production', 'preview', 'demo');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+DO $$ BEGIN
+  CREATE TYPE credential_mode AS ENUM ('platform_managed', 'tenant_owned');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+DO $$ BEGIN
+  CREATE TYPE key_type AS ENUM ('google_maps', 'firebase', 'psp_publishable', 'sentry', 'mapbox');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+DO $$ BEGIN
+  CREATE TYPE moderation_status AS ENUM ('pending', 'approved', 'flagged', 'rejected');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+DO $$ BEGIN
+  CREATE TYPE smoke_status AS ENUM ('pending', 'running', 'passed', 'failed');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+DO $$ BEGIN
+  CREATE TYPE store_status AS ENUM ('not_submitted', 'submitted', 'in_review', 'approved', 'rejected');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 -- App projects (one per tenant per surface per platform)
-CREATE TABLE app_projects (
+CREATE TABLE IF NOT EXISTS app_projects (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   surface app_surface NOT NULL,
@@ -21,11 +35,11 @@ CREATE TABLE app_projects (
   store_listing_state JSONB,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_app_projects_tenant ON app_projects(tenant_id);
-CREATE UNIQUE INDEX idx_app_projects_unique ON app_projects(tenant_id, surface, platform);
+CREATE INDEX IF NOT EXISTS idx_app_projects_tenant ON app_projects(tenant_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_app_projects_unique ON app_projects(tenant_id, surface, platform);
 
 -- Tenant endpoint documents per environment
-CREATE TABLE tenant_endpoints (
+CREATE TABLE IF NOT EXISTS tenant_endpoints (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   environment app_environment NOT NULL,
@@ -33,10 +47,10 @@ CREATE TABLE tenant_endpoints (
   domain_state VARCHAR(50),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-CREATE UNIQUE INDEX idx_tenant_endpoints_unique ON tenant_endpoints(tenant_id, environment);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_tenant_endpoints_unique ON tenant_endpoints(tenant_id, environment);
 
 -- Client-safe key grants
-CREATE TABLE app_key_grants (
+CREATE TABLE IF NOT EXISTS app_key_grants (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   app_project_id UUID REFERENCES app_projects(id),
@@ -48,10 +62,10 @@ CREATE TABLE app_key_grants (
   rotated_at TIMESTAMP,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_app_key_grants_tenant ON app_key_grants(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_app_key_grants_tenant ON app_key_grants(tenant_id);
 
 -- Build manifests (immutable, versioned per surface)
-CREATE TABLE build_manifests (
+CREATE TABLE IF NOT EXISTS build_manifests (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   surface app_surface NOT NULL,
@@ -62,11 +76,11 @@ CREATE TABLE build_manifests (
   created_by UUID,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_build_manifests_tenant ON build_manifests(tenant_id, surface);
-CREATE UNIQUE INDEX idx_build_manifests_version ON build_manifests(tenant_id, surface, version);
+CREATE INDEX IF NOT EXISTS idx_build_manifests_tenant ON build_manifests(tenant_id, surface);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_build_manifests_version ON build_manifests(tenant_id, surface, version);
 
 -- Asset records (uploads + generated packs)
-CREATE TABLE asset_records (
+CREATE TABLE IF NOT EXISTS asset_records (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   kind VARCHAR(50) NOT NULL,
@@ -79,10 +93,10 @@ CREATE TABLE asset_records (
   metadata JSONB,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_asset_records_tenant ON asset_records(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_asset_records_tenant ON asset_records(tenant_id);
 
 -- Demo sessions
-CREATE TABLE demo_sessions (
+CREATE TABLE IF NOT EXISTS demo_sessions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   surface app_surface NOT NULL,
@@ -95,11 +109,11 @@ CREATE TABLE demo_sessions (
   revoked_at TIMESTAMP,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_demo_sessions_tenant ON demo_sessions(tenant_id);
-CREATE INDEX idx_demo_sessions_cohort ON demo_sessions(cohort_id);
+CREATE INDEX IF NOT EXISTS idx_demo_sessions_tenant ON demo_sessions(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_demo_sessions_cohort ON demo_sessions(cohort_id);
 
 -- Platform sound library
-CREATE TABLE sound_library (
+CREATE TABLE IF NOT EXISTS sound_library (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   event_type VARCHAR(100) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -111,7 +125,7 @@ CREATE TABLE sound_library (
 );
 
 -- OTA update publishes
-CREATE TABLE update_publishes (
+CREATE TABLE IF NOT EXISTS update_publishes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   channel VARCHAR(255) NOT NULL,
   eas_update_id VARCHAR(255),
@@ -120,7 +134,7 @@ CREATE TABLE update_publishes (
   published_by UUID,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_update_publishes_channel ON update_publishes(channel);
+CREATE INDEX IF NOT EXISTS idx_update_publishes_channel ON update_publishes(channel);
 
 -- Extend app_builds with new columns
 ALTER TABLE app_builds ADD COLUMN IF NOT EXISTS surface app_surface;

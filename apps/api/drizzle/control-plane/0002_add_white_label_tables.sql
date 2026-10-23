@@ -1,9 +1,11 @@
 -- Migration: Add white-label theming and asset tables (Phase 5)
 
-CREATE TYPE asset_type AS ENUM ('logo', 'splash', 'icon', 'hero', 'guideline', 'app_icon', 'favicon');
+DO $$ BEGIN
+  CREATE TYPE asset_type AS ENUM ('logo', 'splash', 'icon', 'hero', 'guideline', 'app_icon', 'favicon');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 -- Tenant theme tokens (versioned, publish workflow)
-CREATE TABLE tenant_themes (
+CREATE TABLE IF NOT EXISTS tenant_themes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   tokens JSONB NOT NULL,
@@ -12,11 +14,11 @@ CREATE TABLE tenant_themes (
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_tenant_themes_tenant ON tenant_themes(tenant_id);
-CREATE INDEX idx_tenant_themes_published ON tenant_themes(tenant_id, published);
+CREATE INDEX IF NOT EXISTS idx_tenant_themes_tenant ON tenant_themes(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_tenant_themes_published ON tenant_themes(tenant_id, published);
 
 -- Tenant design assets (logos, icons, splash screens, guidelines)
-CREATE TABLE tenant_assets (
+CREATE TABLE IF NOT EXISTS tenant_assets (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
   type asset_type NOT NULL,
@@ -25,5 +27,5 @@ CREATE TABLE tenant_assets (
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_tenant_assets_tenant ON tenant_assets(tenant_id);
-CREATE INDEX idx_tenant_assets_type ON tenant_assets(tenant_id, type);
+CREATE INDEX IF NOT EXISTS idx_tenant_assets_tenant ON tenant_assets(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_tenant_assets_type ON tenant_assets(tenant_id, type);

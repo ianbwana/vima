@@ -7,6 +7,7 @@
     "dev": "nest start --watch",
     "start": "node dist/main",
     "start:prod": "node dist/main",
+    "db:migrate": "node dist/scripts/migrate-control-plane.js",
     "seed:platform-admin": "node dist/scripts/seed-platform-admin.js",
     "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "test": "jest",

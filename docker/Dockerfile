@@ -61,9 +61,8 @@ COPY --from=builder /app/packages/config/src ./packages/config/src
 COPY --from=builder /app/packages/shared-types/src ./packages/shared-types/src
 COPY --from=builder /app/packages/psp-adapters/src ./packages/psp-adapters/src
 
-# Copy drizzle migrations and config for runtime migration
+# Copy drizzle migrations (applied at startup by dist/scripts/migrate-control-plane.js)
 COPY apps/api/drizzle ./apps/api/drizzle
-COPY apps/api/drizzle.config.ts ./apps/api/drizzle.config.ts
 
 # Copy entrypoint script
 COPY docker/scripts/entrypoint.sh ./entrypoint.sh

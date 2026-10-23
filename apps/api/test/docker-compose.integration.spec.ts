@@ -139,9 +139,9 @@ describe('Docker Environment Integration', () => {
       entrypointContent = fs.readFileSync(entrypointPath, 'utf-8');
     });
 
-    it('calls drizzle-kit migrate before the main process', () => {
-      const migrateIndex = entrypointContent.indexOf('drizzle-kit migrate');
-      const startIndex = entrypointContent.indexOf('node');
+    it('runs control-plane migrations before the main process', () => {
+      const migrateIndex = entrypointContent.indexOf('migrate-control-plane.js');
+      const startIndex = entrypointContent.indexOf('dist/main.js');
       expect(migrateIndex).toBeGreaterThan(-1);
       expect(startIndex).toBeGreaterThan(-1);
       expect(migrateIndex).toBeLessThan(startIndex);
